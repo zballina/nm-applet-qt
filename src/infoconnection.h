@@ -1,7 +1,7 @@
 #ifndef INFOCONNECTION_H
 #define INFOCONNECTION_H
 
-#include <QDialog>
+#include <QtGui/QDialog>
 
 namespace Ui {
 class InfoConnection;

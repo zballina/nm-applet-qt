@@ -11,6 +11,7 @@ InfoConnection::InfoConnection(QWidget *parent) :
     ui(new Ui::InfoConnection)
 {
     ui->setupUi(this);
+
     for(int i = 0; i < this->ui->verticalLayoutItems->count(); i++)
     {
         QLayoutItem *o = this->ui->verticalLayoutItems->itemAt(i);

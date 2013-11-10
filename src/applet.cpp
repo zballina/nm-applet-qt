@@ -45,16 +45,18 @@
 #include "listconnections.h"
 #include "applet.h"
 
-Applet::Applet(QObject *parent): QSystemTrayIcon(parent),
-  mMenuSettings(new NetworkManagerMenu),
-  mDialog(new ListConnections)
+Applet::Applet(QObject *parent):
+    QSystemTrayIcon(parent),
+    mDialog(new ListConnections),
+    mMenuSettings(new NetworkManagerMenu)
 {
     QIcon defaultIcon(":/images/nm-applet-qt.svg");
-    setIcon(XdgIcon::fromTheme("star", defaultIcon));
-    setContextMenu(mMenuSettings);
+    setIcon(XdgIcon::fromTheme("start-here", defaultIcon));
 
     connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
          this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+
+    setContextMenu(mMenuSettings);
 }
 
 Applet::~Applet()
@@ -68,10 +70,10 @@ void Applet::iconActivated(QSystemTrayIcon::ActivationReason reason)
     switch (reason)
     {
         case QSystemTrayIcon::Trigger:
-        if(mDialog->isVisible())
-            mDialog->hide();
-        else
-            mDialog->show();
+            if(mDialog->isVisible())
+                mDialog->hide();
+            else
+                mDialog->show();
             break;
         case QSystemTrayIcon::DoubleClick:
         break;

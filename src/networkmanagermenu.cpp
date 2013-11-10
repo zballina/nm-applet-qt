@@ -4,24 +4,31 @@
 #include <QtGui/QCloseEvent>
 #include <QtGui/QMenu>
 #include <QtCore/QDebug>
-#include <NetworkManagerQt/Manager>
 
 #include "about.h"
 #include "infoconnection.h"
 #include "networkmanagermenu.h"
 
 NetworkManagerMenu::NetworkManagerMenu(QWidget *parent) :
-    QMenu(parent), mAbout(new About(this)), mInfoConnection(new InfoConnection(this))
+    QMenu(parent),
+    mAbout(new About(this)),
+    mInfoConnection(new InfoConnection(this))
 {
     createActions();
     addActionsMenu();
+    this->mActivateNetworkAction->setChecked(NetworkManager::isNetworkingEnabled());
+    this->mActivateWirelessAction->setChecked(NetworkManager::isWirelessEnabled());
+
+    NetworkManager::Notifier *notifier = NetworkManager::notifier();
+    connect(notifier, SIGNAL(networkingEnabledChanged(bool)), this, SLOT(networkingEnabledChange(bool)));
+    connect(notifier, SIGNAL(wirelessEnabledChanged(bool)), this, SLOT(wirelessEnabledChange(bool)));
+    connect(notifier, SIGNAL(statusChanged(NetworkManager::Status)), this, SLOT(statusChange(NetworkManager::Status)));
 }
 
 NetworkManagerMenu::~NetworkManagerMenu()
 {
     delete mAbout;
     delete mInfoConnection;
-
 }
 
 void NetworkManagerMenu::createActions()
@@ -71,29 +78,57 @@ void NetworkManagerMenu::showNetworkSettings()
 
 void NetworkManagerMenu::showInfoConnection()
 {
-    qDebug() << "show info connection";
-        mInfoConnection->show();
+    mInfoConnection->show();
 }
 
 void NetworkManagerMenu::showAbout()
 {
-    qDebug() << "show About";
     mAbout->show();
 }
 
-void NetworkManagerMenu::activateNetwork(bool)
+void NetworkManagerMenu::activateNetwork(bool enable)
+{
+    NetworkManager::setNetworkingEnabled(enable);
+}
+
+void NetworkManagerMenu::networkingEnabledChange(bool enable)
+{
+    mActivateNetworkAction->setChecked(enable);
+    mActivateWirelessAction->setVisible(enable ? true: false);
+}
+
+void NetworkManagerMenu::activateWireless(bool enable)
+{
+    NetworkManager::setWirelessEnabled(enable);
+}
+
+void NetworkManagerMenu::wirelessEnabledChange(bool enable)
+{
+    mActivateWirelessAction->setChecked(enable);
+}
+
+void NetworkManagerMenu::activateShowNotifications(bool show)
 {
 
 }
 
-void NetworkManagerMenu::activateWireless(bool)
+void NetworkManagerMenu::statusChange(NetworkManager::Status status)
 {
-
-}
-
-void NetworkManagerMenu::activateShowNotifications(bool)
-{
-
+    switch (status)
+    {
+        case NetworkManager::Asleep:
+        case NetworkManager::Disconnected:
+        case NetworkManager::Connecting:
+        case NetworkManager::Disconnecting:
+        case NetworkManager::Unknown:
+            mShowInfoConnectionAction->setEnabled(false);
+            break;
+        case NetworkManager::Connected:
+        case NetworkManager::ConnectedLinkLocal:
+        case NetworkManager::ConnectedSiteOnly:
+            mShowInfoConnectionAction->setEnabled(true);
+            break;
+    }
 }
 
 void NetworkManagerMenu::closeEvent(QCloseEvent *event)

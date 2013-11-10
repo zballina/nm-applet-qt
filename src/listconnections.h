@@ -1,7 +1,7 @@
 #ifndef LISTCONNECTIONS_H
 #define LISTCONNECTIONS_H
 
-#include <QDialog>
+#include <QtGui/QDialog>
 
 namespace Ui {
 class ListConnections;

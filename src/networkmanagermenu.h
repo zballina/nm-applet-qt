@@ -27,6 +27,10 @@ private slots:
     void activateWireless(bool);
     void activateShowNotifications(bool);
     void showInfoConnection();
+    void statusChange(NetworkManager::Status status);
+
+    void networkingEnabledChange(bool);
+    void wirelessEnabledChange(bool);
 
 private:
     void createActions();
@@ -41,7 +45,6 @@ private:
     QAction *mQuitAction;
     About *mAbout;
     InfoConnection *mInfoConnection;
-    NetworkManager::Device::List mDevices;
 };
 
 #endif // NETWORKMANAGERMENU_H
