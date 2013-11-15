@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/nm-applet-qt.svg</file>
+    </qresource>
+</RCC>

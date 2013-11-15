@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+  http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile arg="false"/>
+  <group name="802-1x">
+    <entry name="eap" type="StringList">
+      <label>EAP</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="identity" type="String">
+      <label>Identity</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="anonymousidentity" type="String" dbuskey="NM_SETTING_802_1X_ANONYMOUS_IDENTITY">
+      <label>Anonymous identity</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="cacert" type="ByteArray" dbuskey="NM_SETTING_802_1X_CA_CERT">
+      <label>CA Cert</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="capath" type="Path" dbuskey="NM_SETTING_802_1X_CA_PATH">
+      <label>CA Path</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="clientcert" type="ByteArray" dbuskey="NM_SETTING_802_1X_CLIENT_CERT">
+      <label>Client Cert</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="clientcertpath" type="Path" nodbus="true">
+      <label>Client Cert Path</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="phase1peapver" key="phase1peapver" type="Enum" dbuskey="NM_SETTING_802_1X_PHASE1_PEAPVER">
+      <label>Phase 1 PEAP version</label>
+      <whatsthis></whatsthis>
+      <choices>
+        <choice name="automatic" dbusvalue="auto"/>
+        <choice name="zero" dbusvalue="0"/>
+        <choice name="one" dbusvalue="1"/>
+      </choices>
+    </entry>
+    <entry name="phase1peaplabel" key="phase1peaplabel" type="String" dbuskey="NM_SETTING_802_1X_PHASE1_PEAPLABEL">
+      <label>Phase 1 PEAP label</label>
+      <whatsthis></whatsthis>
+      <choices>
+        <choice name="automatic"/>
+        <choice name="zero"/>
+        <choice name="one"/>
+      </choices>
+    </entry>
+    <entry name="phase1fastprovisioning" type="String" dbuskey="NM_SETTING_802_1X_PHASE1_FAST_PROVISIONING">
+      <label>Phase 1 fast provisioning</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="phase2auth" type="Enum" dbuskey="NM_SETTING_802_1X_PHASE2_AUTH">
+      <label>Phase 2 auth</label>
+      <default>none</default>
+      <choices>
+        <choice name="none"/>
+        <choice name="pap"/>
+        <choice name="mschap"/>
+        <choice name="mschapv2"/>
+        <choice name="chap"/>
+        <choice name="md5"/>
+        <choice name="gtc"/>
+        <choice name="otp"/>
+      </choices>
+    </entry>
+    <entry name="phase2autheap" key="phase2autheap" type="Enum" dbuskey="NM_SETTING_802_1X_PHASE2_AUTHEAP">
+      <label>Phase 2 auth eap</label>
+      <default>none</default>
+      <choices>
+        <choice name="none"/>
+        <choice name="md5"/>
+        <choice name="gtc"/>
+        <choice name="otp"/>
+        <choice name="mschapv2"/>
+        <choice name="tls"/>
+      </choices>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="phase2cacert" type="ByteArray" dbuskey="NM_SETTING_802_1X_PHASE2_CA_CERT">
+      <label>Phase 2 CA Cert</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="phase2capath" type="Path" dbuskey="NM_SETTING_802_1X_PHASE2_CA_PATH">
+      <label>Phase 2 CA Path</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="phase2clientcert" type="ByteArray" dbuskey="NM_SETTING_802_1X_PHASE2_CLIENT_CERT">
+      <label>Phase 2 client cert</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="phase2clientcertpath" type="Path" nodbus="true">
+      <label>Phase 2 client cert path</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="password" type="String" secret="true">
+      <label>Password</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="privatekey" type="ByteArray" dbuskey="NM_SETTING_802_1X_PRIVATE_KEY">
+      <label>Private key</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="privatekeypath" type="Path" nodbus="true">
+      <label>Private key Path</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="privatekeypassword" type="String" secret="true" dbuskey="NM_SETTING_802_1X_PRIVATE_KEY_PASSWORD">
+      <label>Private key password</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="phase2privatekey" type="ByteArray" dbuskey="NM_SETTING_802_1X_PHASE2_PRIVATE_KEY">
+      <label>Phase 2 private key</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="phase2privatekeypath" type="Path" nodbus="true">
+      <label>Phase 2 Private key Path</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="phase2privatekeypassword" type="String" secret="true" dbuskey="NM_SETTING_802_1X_PHASE2_PRIVATE_KEY_PASSWORD">
+      <label>Phase 2 private key password</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="pin" type="String">
+      <label>PIN</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="psk" type="String">
+      <label>PSK</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="UseSystemCaCerts" type="Bool" dbuskey="NM_SETTING_802_1X_SYSTEM_CA_CERTS">
+      <label>Use System CA Certs</label>
+      <default>false</default>
+    </entry>
+    <entry name="enabled" type="Bool" nodbus="true">
+      <label>Connection uses 802.1x</label>
+      <default>false</default>
+    </entry>
+  </group>
+</kcfg>
+
+<!--
+  <group name="">
+    <entry name="" type="">
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+  </group>
+  -->
+

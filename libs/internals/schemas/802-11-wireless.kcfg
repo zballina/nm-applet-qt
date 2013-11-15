@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+  http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile arg="false"/>
+  <group name="802-11-wireless">
+    <entry name="ssid" type="ByteArray">
+      <label>SSID</label>
+      <whatsthis>Service Set IDentifier (network name) </whatsthis>
+    </entry>
+    <entry name="mode" key="mode" type="Enum">
+      <choices>
+        <choice name="infrastructure"/>
+        <choice name="adhoc"/>
+      </choices>
+      <default>0</default>
+      <label>Mode</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="band" key="band" type="Enum">
+      <choices>
+        <choice name="a"/>
+        <choice name="bg"/>
+      </choices>
+      <default>1</default>
+      <label>Band</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="channel" type="UInt">
+      <label>Channel</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="bssid" type="ByteArray">
+      <label>BSSID</label>
+      <whatsthis>Basic Service Set IDentifier of the access point to use</whatsthis>
+    </entry>
+    <entry name="rate" type="UInt">
+      <label>Data rate</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="txpower" type="UInt" dbuskey="NM_SETTING_WIRELESS_TX_POWER">
+      <label>Transmit power</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="macaddress" type="ByteArray" dbuskey="NM_SETTING_WIRELESS_MAC_ADDRESS">
+      <label>MAC Address</label>
+      <whatsthis>Hardware address to set on the wireless network interface</whatsthis>
+    </entry>
+    <entry name="mtu" type="UInt">
+      <label>MTU</label>
+      <default>0</default>
+      <whatsthis>Maximum Transmit Unit</whatsthis>
+    </entry>
+    <!-- another unspecified list probably bytearrays -->
+    <entry name="seenbssids" type="StringList" dbuskey="NM_SETTING_WIRELESS_SEEN_BSSIDS">
+      <label>Seen BSSIDs</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="security" type="String">
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+  </group>
+</kcfg>
+

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+  http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <include>kwallet.h</include>
+  <include>"service/secretstorage.h"</include>
+  <kcfgfile arg="true"/>
+  <group name="General">
+    <entry name="Connections" type="StringList">
+      <label>Connections</label>
+      <whatsthis/>
+    </entry>
+    <entry name="SecretStorageMode" type="Enum">
+      <label>Store secrets in wallet</label>
+      <default code="true">(KWallet::Wallet::isEnabled() ? SecretStorage::Secure : SecretStorage::PlainText)</default>
+      <whatsthis/>
+      <choices name="SecretStorage::SecretStorage">
+        <choice name="DontStore"/>
+        <choice name="PlainText"/>
+        <choice name="Secure"/>
+      </choices>
+    </entry>
+    <entry name="Autostart" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="InterfaceNamingStyle" type="Enum">
+      <choices name="InterfaceNamingChoices">
+        <choice name="TypeNames"/>
+        <choice name="SystemNames"/>
+        <choice name="VendorProductNames"/>
+      </choices>
+    </entry>
+    <entry name="NetworkSpeedUnit" type="Enum">
+      <choices name="NetworkSpeedUnitChoices">
+        <choice name="KBytes_s"/>
+        <choice name="KBits_s"/>
+      </choices>
+    </entry>
+    <entry name="ShowAdvancedSettings" type="Bool">
+        <default>false</default>
+    </entry>
+    <entry name="DetailKeys" type="StringList">
+      <label>Details</label>
+    </entry>
+    <entry name="AskForGsmPin" type="Enum">
+      <choices name="AskForGsmPinChoices">
+        <choice name="OnModemDetection"/>
+        <choice name="WhenActivatingConnection"/>
+      </choices>
+    </entry>
+  </group>
+  <group name="SystemTray">
+      <entry name="IconCount" type="UInt">
+          <default>1</default>
+          <min>1</min>
+          <max>5</max>
+      </entry>
+      <entry name="IconTypes$(IconIndex)" type="UInt" key="IconTypes_$(IconIndex)">
+          <parameter name="IconIndex" type="Int" max="4"/>
+          <default param="0">31</default>
+      </entry>
+  </group>
+</kcfg>

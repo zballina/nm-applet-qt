@@ -1,0 +1,5 @@
+File=cdma.kcfg
+ClassName=Cdma
+Mutators=true
+Visibility=KNMINTERNALS_EXPORT
+NameSpace=Knm

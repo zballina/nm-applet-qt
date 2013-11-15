@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<node>
+  <interface name="org.kde.networkmanagement.GsmInterfaceConnection">
+    <method name="getAccessTechnology">
+      <arg type="i" direction="out" />
+    </method>
+    <method name="getSignalQuality">
+      <arg type="i" direction="out" />
+    </method>
+    <property name="accessTechnology" type="i" access="read"/>
+    <property name="signalQuality" type="i" access="read"/>
+    <signal name="accessTechnologyChanged">
+      <arg name="tech" type="i" direction="out"/>
+    </signal>
+    <signal name="signalQualityChanged">
+      <arg name="quality" type="i" direction="out"/>
+    </signal>
+    <signal name="gsmPropertiesChanged">
+      <arg name="properties" type="a{sv}" tp:type="String_Variant_Map">
+        <annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+        <tp:docstring>
+          A dictionary mapping property names to variant boxed values
+        </tp:docstring>
+      </arg>
+    </signal>
+  </interface>
+</node>

@@ -1,0 +1,6 @@
+File=knmserviceprefs.kcfg
+ClassName=KNetworkManagerServicePrefs
+Singleton=true
+Mutators=true
+Visibility=KNMINTERNALS_EXPORT
+IncludeFiles=\"knminternals_export.h\"

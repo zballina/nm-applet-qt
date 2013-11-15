@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+  http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile arg="false"/>
+  <group name="ipv4">
+    <entry name="method" key="method" type="Enum">
+      <label>Method</label>
+      <whatsthis>Choose the way to set the IP address of this connection</whatsthis>
+      <choices>
+        <choice name="Automatic" dbusvalue="auto"/>
+        <choice name="Dhcp" dbusvalue="dhcp"/>
+        <choice name="LinkLocal" dbusvalue="link-local"/>
+        <choice name="Manual" dbusvalue="manual"/>
+        <choice name="Shared" dbusvalue="shared"/>
+        <choice name="Disabled" dbusvalue="ignore"/>
+      </choices>
+      <default>42</default><!-- invalid default so that the choice is always sent; NM requires this -->
+    </entry>
+    <entry name="dns" type="StringList">
+      <label>DNS Servers</label>
+      <whatsthis>List of Domain Name System servers to use</whatsthis>
+    </entry>
+    <entry name="dnssearch" type="StringList" dbuskey="NM_SETTING_IP6_CONFIG_DNS_SEARCH">
+      <label>Search Domains</label>
+      <whatsthis>List of domains to search for a hostname</whatsthis>
+    </entry>
+    <!-- addresses is actually UIntListList -->
+    <entry name="addresses" type="StringList">
+      <label>IP Addresses</label>
+      <whatsthis>List of IP addresses to configure on this connection</whatsthis>
+    </entry>
+    <entry name="ignoredhcpdns" type="Bool" dbuskey="NM_SETTING_IP6_CONFIG_IGNORE_AUTO_DNS">
+      <label>Ignore DHCP DNS</label>
+      <whatsthis>Ignore DNS servers returned by DHCP and use the configured servers instead</whatsthis>
+    </entry>
+    <entry name="ignoreautoroute" type="Bool" dbuskey="NM_SETTING_IP6_CONFIG_IGNORE_AUTO_ROUTES">
+      <label>Ignore Automatic Routes</label>
+      <whatsthis>Ignore routes returned by automatic configuration mechanisms and use the manually configured routes instead</whatsthis>
+    </entry>
+    <entry name="neverdefault" type="Bool" dbuskey="NM_SETTING_IP6_CONFIG_NEVER_DEFAULT">
+      <label>Never Default Route</label>
+      <whatsthis>Never assign the default route to this connection</whatsthis>
+    </entry>
+    <entry name="mayfail" type="Bool" dbuskey="NM_SETTING_IP6_CONFIG_MAY_FAIL">
+      <label>Required for this connection</label>
+    </entry>
+  </group>
+</kcfg>
+
+<!--
+  <group name="">
+    <entry name="" type="">
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+  </group>
+  -->
+

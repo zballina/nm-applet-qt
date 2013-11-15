@@ -1,0 +1,158 @@
+include_directories(
+   ${CMAKE_CURRENT_SOURCE_DIR}
+   ${CMAKE_CURRENT_BINARY_DIR}
+   ${CMAKE_CURRENT_SOURCE_DIR}/..
+   ${CMAKE_CURRENT_SOURCE_DIR}/../internals
+   ${CMAKE_CURRENT_BINARY_DIR}/../internals
+   )
+
+set(knmservice_SRCS
+   # defines interface for objects observing connections
+    connectionhandler.cpp
+
+   # list of all connections, maintains connectionhandlers
+    connectionlist.cpp
+
+   # handles storage of secrets
+#secretstorage.cpp
+
+   #defines interface for objects storing secrets
+    secretsprovider.cpp
+
+   # list of things that may be connected: connections and unconfigured networks
+   activatablelist.cpp
+
+   # maintains NIC activatable providers
+
+   # relates connections to network interfaces
+    networkinterfaceactivatableprovider.cpp
+
+   # subclass of the above, uses ethernet carrier status to select activatables
+    wirednetworkinterfaceactivatableprovider.cpp
+
+   # complex class for managing connections and unconfigured networks for wireless interfaces
+    wirelessnetworkinterfaceactivatableprovider.cpp
+
+   # relates gsm connections to network interfaces
+    gsmnetworkinterfaceactivatableprovider.cpp
+
+   # interface for tracking activatable events
+   activatableobserver.cpp
+
+   # simple debug output observer
+#activatabledebug.cpp
+
+   # configures unconfigured devices and new wireless networks on demand and connects them
+    configurationlauncher.cpp
+
+   # updates connection state as they are used
+    connectionusagemonitor.cpp
+
+   # exports activatables on the session bus to Plasmoids etc
+    sessionabstractedservice.cpp
+
+   # creates vpn activatables
+    vpninterfaceconnectionprovider.cpp
+
+   # performs KNotifications on events
+#notificationmanager.cpp
+
+   # static global definitions of event string ids
+   events.cpp
+
+   # sort logic for activatables
+    sortedactivatablelist.cpp
+
+   # dialog to ask for PIN code
+#pindialog.cpp
+   )
+
+set(HEADERS_FILES
+#    pindialog.h
+)
+
+set(UIS_FILES
+#    pinwidget.ui
+)
+
+qt4_add_dbus_adaptor(
+    knmservice_SRCS
+    interfaces/org.kde.networkmanagement.activatable.xml
+    activatable.h
+    Knm::Activatable
+    activatableadaptor
+    ActivatableAdaptor
+)
+
+qt4_add_dbus_adaptor(
+    knmservice_SRCS
+    interfaces/org.kde.networkmanagement.interfaceconnection.xml
+    interfaceconnection.h
+    Knm::InterfaceConnection
+    interfaceconnectionadaptor
+    InterfaceConnectionAdaptor
+)
+
+qt4_add_dbus_adaptor(
+    knmservice_SRCS
+    interfaces/org.kde.networkmanagement.wirelessinterfaceconnection.xml
+    wirelessinterfaceconnection.h
+    Knm::WirelessInterfaceConnection
+    wirelessinterfaceconnectionadaptor
+    WirelessInterfaceConnectionAdaptor
+)
+
+qt4_add_dbus_adaptor(
+    knmservice_SRCS
+    interfaces/org.kde.networkmanagement.wirelessnetwork.xml
+    wirelessnetwork.h
+    Knm::WirelessNetwork
+    wirelessnetworkadaptor
+    WirelessNetworkAdaptor
+)
+
+qt4_add_dbus_adaptor(
+    knmservice_SRCS
+    interfaces/org.kde.networkmanagement.gsminterfaceconnection.xml
+    gsminterfaceconnection.h
+    Knm::GsmInterfaceConnection
+    gsminterfaceconnectionadaptor
+    GsmInterfaceConnectionAdaptor
+)
+
+qt4_add_dbus_adaptor(knmservice_SRCS
+   interfaces/org.kde.networkmanagement.xml
+   sessionabstractedservice.h
+   SessionAbstractedService
+   sessionabstractedserviceadaptor
+   SessionAbstractedServiceAdaptor
+   )
+
+
+include( ${QT_USE_FILE} )
+
+qt4_wrap_ui(UIS ${UIS_FILES} )
+qt4_wrap_cpp( HEADERS_MOC ${HEADERS_FILES} )
+
+link_directories( 
+    ${MODEMMANAGERQT_LIBRARY_DIRS} 
+    ${QTNETWORK_LIBRARY_DIRS} 
+    ${NETWORKMANAGERQT_LIBRARY_DIRS} 
+    ${CMAKE_LIBRARY_PATH} 
+    ${CMAKE_CURRENT_BINARY_DIR}/../libs/internals
+)
+
+add_library(
+    knmservice SHARED ${knmservice_SRCS} ${UIS} ${HEADERS_MOC}
+)
+
+target_link_libraries(knmservice knminternals ModemManagerQt NetworkManagerQt ${QT_QTCORE_LIBRARY} ${QT_QTDBUS_LIBRARY} ${QT_QTGUI_LIBRARY})
+
+set_target_properties(knmservice PROPERTIES
+   VERSION ${GENERIC_LIB_VERSION}
+   SOVERSION ${GENERIC_LIB_SOVERSION}
+   )
+
+install(TARGETS knmservice DESTINATION lib${LIB_SUFFIX})
+
+

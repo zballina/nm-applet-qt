@@ -1,0 +1,5 @@
+File=802-11-wireless-security.kcfg
+ClassName=WirelessSecurity
+Mutators=true
+Visibility=KNMINTERNALS_EXPORT
+NameSpace=Knm

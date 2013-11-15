@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+  http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile arg="false"/>
+  <group name="serial">
+    <entry name="baud" type="UInt">
+      <label>Baud</label>
+      <default>57600</default>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="bits" type="UInt">
+      <label>Data bits</label>
+      <default>8</default>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="parity" type="Enum">
+      <label>Parity</label>
+      <choices>
+        <choice name="None" dbusvalue="n"/>
+        <choice name="Even" dbusvalue="E"/>
+        <choice name="Odd" dbusvalue="o"/>
+      </choices>
+      <default>None</default>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="stopbits" type="UInt">
+      <label>Stop bits</label>
+      <default>1</default>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="senddelay" type="ULongLong" dbuskey="NM_SETTING_SERIAL_SEND_DELAY">
+      <label>Send delay</label>
+      <whatsthis></whatsthis>
+    </entry>
+  </group>
+</kcfg>

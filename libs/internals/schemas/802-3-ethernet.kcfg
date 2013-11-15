@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+  http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile arg="false"/>
+  <group name="802-3-ethernet">
+    <entry name="port" key="port" type="Enum">
+      <label>Port</label>
+      <whatsthis></whatsthis>
+      <choices>
+        <choice name="tp"/>
+        <choice name="aui"/>
+        <choice name="bnc"/>
+        <choice name="mii"/>
+      </choices>
+    </entry>
+    <entry name="speed" type="UInt">
+      <label>Speed</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="duplex" key="duplex" type="Enum">
+      <label comment="like in Ethernet duplex mode (half or full)">Duplex</label>
+      <whatsthis>Whether the Ethernet interface should use duplex communications</whatsthis>
+      <choices>
+        <choice name="half"/>
+        <choice name="full"/>
+      </choices>
+    </entry>
+    <!-- nb "auto-negotiate" in NM -->
+    <entry name="autonegotiate" type="Bool" dbuskey="NM_SETTING_WIRED_AUTO_NEGOTIATE">
+      <label>Auto negotiate</label>
+      <default>true</default>
+      <whatsthis></whatsthis>
+    </entry>
+    <!-- nb "mac-address" in NM -->
+    <entry name="macaddress" type="ByteArray" dbuskey="NM_SETTING_WIRED_MAC_ADDRESS">
+      <label>MAC Address</label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="mtu" type="UInt">
+      <label>MTU</label>
+      <default>0</default>
+      <whatsthis>Maximum Transfer Unit to use</whatsthis>
+    </entry>
+  </group>
+</kcfg>
+
+<!--
+  <group name="">
+    <entry name="" type="">
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+  </group>
+  -->
+

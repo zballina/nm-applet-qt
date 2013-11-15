@@ -1,0 +1,5 @@
+File=gsm.kcfg
+ClassName=Gsm
+Mutators=true
+Visibility=KNMINTERNALS_EXPORT
+NameSpace=Knm

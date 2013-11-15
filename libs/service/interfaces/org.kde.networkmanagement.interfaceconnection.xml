@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<node>
+  <interface name="org.kde.networkmanagement.InterfaceConnection">
+    <method name="connectionUuid">
+      <arg name="uni" type="s" direction="out" />
+    </method>
+    <method name="connectionType">
+      <arg name="type" type="i" direction="out" />
+    </method>
+    <method name="connectionName">
+      <arg name="name" type="s" direction="out" />
+    </method>
+    <method name="iconName">
+      <arg name="iconName" type="s" direction="out" />
+    </method>
+    <method name="activationState">
+      <arg name="uni" type="u" direction="out" />
+    </method>
+    <method name="oldActivationState">
+        <arg name="uni" type="u" direction="out" />
+    </method>
+    <method name="deactivate"/>
+    <signal name="activationStateChanged">
+      <arg name="oldState" type="u" direction="out" />
+      <arg name="newState" type="u" direction="out" />
+    </signal>
+    <signal name="hasDefaultRouteChanged">
+      <arg name="hasDefaultRoute" type="b" direction="out"/>
+    </signal>
+    <property name="type" type="u" access="read"/>
+    <property name="uuid" type="s" access="read"/>
+    <property name="name" type="s" access="read"/>
+    <property name="iconName" type="s" access="read"/>
+    <property name="activationState" type="u" access="read"/>
+    <property name="hasDefaultRoute" type="b" access="read"/>
+    <signal name="icPropertiesChanged">
+      <arg name="properties" type="a{sv}" tp:type="String_Variant_Map">
+        <annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+        <tp:docstring>
+          A dictionary mapping property names to variant boxed values
+        </tp:docstring>
+      </arg>
+    </signal>
+  </interface>
+</node>
