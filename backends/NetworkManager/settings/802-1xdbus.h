@@ -5,8 +5,6 @@
 
 #include <nm-setting-8021x.h>
 
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
 #include "settingdbus.h"
 #include "nm09dbus_export.h"
 namespace Knm

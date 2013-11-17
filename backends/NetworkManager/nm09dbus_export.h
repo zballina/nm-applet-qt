@@ -21,20 +21,16 @@
 #define NM09DBUS_EXPORT_H
 
 /* needed for KDE_EXPORT and KDE_IMPORT macros */
-#include <kdemacros.h>
+//#include <kdemacros.h>
 
 #ifndef NM09DBUS_EXPORT
 # if defined(MAKE_NM09DBUS_LIB)
 /* We are building this library */
-#  define NM09DBUS_EXPORT KDE_EXPORT
+#  define NM09DBUS_EXPORT __attribute__ ((visibility("default")))
 # else
 /* We are using this library */
-#  define NM09DBUS_EXPORT KDE_IMPORT
+#  define NM09DBUS_EXPORT __attribute__ ((visibility("default")))
 # endif
 #endif
-
-# ifndef NM09DBUS_EXPORT_DEPRECATED
-#  define NM09DBUS_EXPORT_DEPRECATED KDE_DEPRECATED KDEPIM_EXPORT
-# endif
 
 #endif

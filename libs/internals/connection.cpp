@@ -141,10 +141,10 @@ Connection::Type Connection::typeFromSolidType(const NetworkManager::Device::Ptr
                         return Knm::Connection::Pppoe;
                         /* TODO: add NetworkManager::ModemDevice::Lte */
                     case NetworkManager::ModemDevice::Lte:
-                        kWarning() << "Unhandled modem sub type: LTE";
+                        qWarning() << "Unhandled modem sub type: LTE";
                         break;
                     case NetworkManager::ModemDevice::NoCapability:
-                        kWarning() << "Unhandled modem sub type: NetworkManager::ModemDevice::NoCapability";
+                        qWarning() << "Unhandled modem sub type: NetworkManager::ModemDevice::NoCapability";
                         break;
                 }
             }
@@ -155,7 +155,7 @@ Connection::Type Connection::typeFromSolidType(const NetworkManager::Device::Ptr
             return Knm::Connection::Unknown;
         default
                 :
-            kWarning() << "Unhandled type:" << iface->type();
+            qWarning() << "Unhandled type:" << iface->type();
             break;
     }
     return Knm::Connection::Wired;
@@ -418,7 +418,7 @@ Setting *Connection::setting(Setting::Type settingType) const
     {
         if (!setting)
         {
-            kWarning() << "Setting is null. That should not happen.";
+            qWarning() << "Setting is null. That should not happen.";
             continue;
         }
         if (setting->type() == settingType)

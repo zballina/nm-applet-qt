@@ -4,9 +4,50 @@ include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/..
    ${CMAKE_CURRENT_SOURCE_DIR}/../internals
    ${CMAKE_CURRENT_BINARY_DIR}/../internals
-   )
+)
 
-set(knmservice_SRCS
+set(knmservice_HEADERS
+
+   # list of all connections, maintains connectionhandlers
+    connectionlist.h
+
+   #defines interface for objects storing secrets
+    secretsprovider.h
+
+   # list of things that may be connected: connections and unconfigured networks
+   activatablelist.h
+
+   # maintains NIC activatable providers
+
+   # relates connections to network interfaces
+    networkinterfaceactivatableprovider.h
+
+   # subclass of the above, uses ethernet carrier status to select activatables
+    wirednetworkinterfaceactivatableprovider.h
+
+   # complex class for managing connections and unconfigured networks for wireless interfaces
+    wirelessnetworkinterfaceactivatableprovider.h
+
+   # relates gsm connections to network interfaces
+    gsmnetworkinterfaceactivatableprovider.h
+
+   # configures unconfigured devices and new wireless networks on demand and connects them
+    configurationlauncher.h
+
+   # updates connection state as they are used
+    connectionusagemonitor.h
+
+   # exports activatables on the session bus to Plasmoids etc
+    sessionabstractedservice.h
+
+   # creates vpn activatables
+    vpninterfaceconnectionprovider.h
+
+   # sort logic for activatables
+    sortedactivatablelist.h
+)
+   
+set(knmservice_SOURCES
    # defines interface for objects observing connections
     connectionhandler.cpp
 
@@ -62,17 +103,6 @@ set(knmservice_SRCS
 
    # sort logic for activatables
     sortedactivatablelist.cpp
-
-   # dialog to ask for PIN code
-#pindialog.cpp
-   )
-
-set(HEADERS_FILES
-#    pindialog.h
-)
-
-set(UIS_FILES
-#    pinwidget.ui
 )
 
 qt4_add_dbus_adaptor(
@@ -126,13 +156,11 @@ qt4_add_dbus_adaptor(knmservice_SRCS
    SessionAbstractedService
    sessionabstractedserviceadaptor
    SessionAbstractedServiceAdaptor
-   )
-
+)
 
 include( ${QT_USE_FILE} )
 
-qt4_wrap_ui(UIS ${UIS_FILES} )
-qt4_wrap_cpp( HEADERS_MOC ${HEADERS_FILES} )
+qt4_wrap_cpp( HEADERS_MOC ${knmservice_HEADERS})
 
 link_directories( 
     ${MODEMMANAGERQT_LIBRARY_DIRS} 
@@ -142,16 +170,26 @@ link_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/../libs/internals
 )
 
-add_library(
-    knmservice SHARED ${knmservice_SRCS} ${UIS} ${HEADERS_MOC}
+add_library(knmservice 
+    SHARED 
+    ${knmservice_SRCS} 
+    ${HEADERS_MOC} 
+    ${knmservice_SOURCES}
 )
 
-target_link_libraries(knmservice knminternals ModemManagerQt NetworkManagerQt ${QT_QTCORE_LIBRARY} ${QT_QTDBUS_LIBRARY} ${QT_QTGUI_LIBRARY})
+target_link_libraries(knmservice 
+    knminternals 
+    ModemManagerQt 
+    NetworkManagerQt 
+    ${QT_QTCORE_LIBRARY} 
+    ${QT_QTDBUS_LIBRARY} 
+    ${QT_QTGUI_LIBRARY}
+)
 
 set_target_properties(knmservice PROPERTIES
    VERSION ${GENERIC_LIB_VERSION}
    SOVERSION ${GENERIC_LIB_SOVERSION}
-   )
+)
 
 install(TARGETS knmservice DESTINATION lib${LIB_SUFFIX})
 

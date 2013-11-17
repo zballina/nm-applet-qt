@@ -3,13 +3,10 @@
 #ifndef KNM_IPV4SETTING_H
 #define KNM_IPV4SETTING_H
 
-#include <QHostAddress>
-#include <kglobal.h>
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
+#include <QtNetwork/QHostAddress>
+
 #include <NetworkManagerQt/ipconfig.h>
 #include "setting.h"
-#include "knminternals_export.h"
 
 Q_DECLARE_METATYPE(NetworkManager::IpAddress)
 Q_DECLARE_METATYPE(NetworkManager::IpRoute)
@@ -17,7 +14,7 @@ Q_DECLARE_METATYPE(NetworkManager::IpRoute)
 namespace Knm
 {
 
-    class KNMINTERNALS_EXPORT Ipv4Setting : public Setting
+    class Ipv4Setting : public Setting
     {
         public:
             class EnumMethod

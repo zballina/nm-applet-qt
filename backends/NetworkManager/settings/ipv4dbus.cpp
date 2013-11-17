@@ -3,6 +3,7 @@
 
 #include "ipv4dbus.h"
 
+#include <QtCore/QDebug>
 #include <arpa/inet.h>
 #include <NetworkManagerQt/generic-types.h>
 
@@ -19,9 +20,9 @@ Ipv4Dbus::~Ipv4Dbus()
 void Ipv4Dbus::fromMap(const QVariantMap &map)
 {
 
-    /*kDebug() << "IPv4 map: ";
+    /*qDebug() << "IPv4 map: ";
     foreach(const QString & key, map.keys())
-        kDebug() << key << " : " << map.value(key);*/
+        qDebug() << key << " : " << map.value(key);*/
 
     Knm::Ipv4Setting *setting = static_cast<Knm::Ipv4Setting *>(m_setting);
 
@@ -48,7 +49,7 @@ void Ipv4Dbus::fromMap(const QVariantMap &map)
         {
             QHostAddress tmpHost(ntohl(utmp));
             dbusDns << tmpHost;
-            kDebug() << "DNS IP is " << tmpHost.toString();
+            qDebug() << "DNS IP is " << tmpHost.toString();
         }
         //NO dnsArg.endArray(); it's fatal in debug builds.
         setting->setDns(dbusDns);
@@ -79,7 +80,7 @@ void Ipv4Dbus::fromMap(const QVariantMap &map)
         {
             if (uintList.count() != 3)
             {
-                kWarning() << "Invalid address format detected. UInt count is " << uintList.count();
+                qWarning() << "Invalid address format detected. UInt count is " << uintList.count();
                 continue;
             }
 
@@ -89,10 +90,10 @@ void Ipv4Dbus::fromMap(const QVariantMap &map)
             address.setGateway(QHostAddress((quint32) ntohl(uintList.at(2))));
             if (!address.isValid())
             {
-                kWarning() << "Invalid address format detected.";
+                qWarning() << "Invalid address format detected.";
                 continue;
             }
-            kDebug() << "IP Address:" << address.ip().toString() << " Subnet:" << address.prefixLength() << "Gateway:" << address.gateway().toString();
+            qDebug() << "IP Address:" << address.ip().toString() << " Subnet:" << address.prefixLength() << "Gateway:" << address.gateway().toString();
 
             addresses << address;
         }
@@ -119,7 +120,7 @@ void Ipv4Dbus::fromMap(const QVariantMap &map)
         {
             if (uintList.count() != 4)
             {
-                kWarning() << "Invalid route format detected. UInt count is " << uintList.count();
+                qWarning() << "Invalid route format detected. UInt count is " << uintList.count();
                 continue;
             }
 
@@ -130,7 +131,7 @@ void Ipv4Dbus::fromMap(const QVariantMap &map)
             route.setMetric((quint32)uintList.at(3));
             if (!route.isValid())
             {
-                kWarning() << "Invalid route format detected.";
+                qWarning() << "Invalid route format detected.";
                 continue;
             }
             routes << route;
@@ -192,7 +193,7 @@ Knm::Ipv4Setting::EnumMethod::type Ipv4Dbus::methodStringToEnum(QString method)
                         return Knm::Ipv4Setting::EnumMethod::Disabled;
                     else
                     {
-                        kDebug() << "Unknown method given:" << method;
+                        qDebug() << "Unknown method given:" << method;
                         return Knm::Ipv4Setting::EnumMethod::Automatic;
                     }
 }

@@ -5,8 +5,6 @@
 
 #include <nm-setting-ip6-config.h>
 
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
 #include <QHostAddress>
 #include <QDBusArgument>
 

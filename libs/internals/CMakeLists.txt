@@ -2,9 +2,9 @@ include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}
    ${CMAKE_CURRENT_BINARY_DIR}
    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/client
-#   ${CMAKE_CURRENT_SOURCE_DIR}/../../backends/NetworkManager
+   ${CMAKE_CURRENT_SOURCE_DIR}/../../backends/NetworkManager
    ${CMAKE_CURRENT_SOURCE_DIR}/../../libs
-   )
+)
 
 ## next target: internals layer library
 
@@ -13,7 +13,18 @@ set(knminternals_PUB_HDRS
     environment.h
 )
 
-set(knminternals_SRCS
+set(knminternals_HEADERS
+   activatable.h
+   interfaceconnection.h
+   hiddenwirelessinterfaceconnection.h
+   wirelessinterfaceconnection.h
+   wirelessnetwork.h
+   unconfiguredinterface.h
+   vpninterfaceconnection.h
+   gsminterfaceconnection.h
+)
+
+set(knminternals_SOURCES
    connection.cpp
 
    environment.cpp
@@ -72,10 +83,23 @@ set(knminternals_SRCS
    tooltips.cpp
    # helper functions to obtain UI strings for various enums
    uiutils.cpp
-   )
+)
 
-add_library(knminternals SHARED ${knminternals_SRCS})
-target_link_libraries(knminternals knmclient ModemManagerQt NetworkManagerQt ${QT_QTXML_LIBRARY} ${QT_QTNETWORK_LIBRARY})
+qt4_wrap_cpp(HEADERS_MOC 
+    ${knminternals_HEADERS}
+)
+   
+add_library(knminternals SHARED ${HEADERS_MOC} ${knminternals_SOURCES})
+
+target_link_libraries(knminternals 
+    knmclient 
+    ModemManagerQt 
+    NetworkManagerQt 
+    ${QT_QTXML_LIBRARY}  
+    ${QT_QTCORE_LIBRARY} 
+    ${QT_QTDBUS_LIBRARY} 
+    ${QT_QTNETWORK_LIBRARY}
+)
 
 set_target_properties(knminternals PROPERTIES
    VERSION ${GENERIC_LIB_VERSION}

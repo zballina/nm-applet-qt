@@ -3,15 +3,11 @@
 #ifndef KNM_SERIALSETTING_H
 #define KNM_SERIALSETTING_H
 
-#include <kglobal.h>
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
 #include "setting.h"
-#include "knminternals_export.h"
+
 namespace Knm
 {
-
-    class KNMINTERNALS_EXPORT SerialSetting : public Setting
+    class SerialSetting : public Setting
     {
         public:
             class EnumParity

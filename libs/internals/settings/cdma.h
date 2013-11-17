@@ -3,15 +3,11 @@
 #ifndef KNM_CDMASETTING_H
 #define KNM_CDMASETTING_H
 
-#include <kglobal.h>
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
 #include "setting.h"
-#include "knminternals_export.h"
+
 namespace Knm
 {
-
-    class KNMINTERNALS_EXPORT CdmaSetting : public Setting
+    class CdmaSetting : public Setting
     {
         public:
 

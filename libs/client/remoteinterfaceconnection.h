@@ -22,6 +22,8 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef REMOTEINTERFACECONNECTION_H
 #define REMOTEINTERFACECONNECTION_H
 
+#include <QtCore/QGlobalStatic>
+#include <QtCore/qglobal.h>
 #include "remoteactivatable.h"
 
 #include "interfaceconnection.h"

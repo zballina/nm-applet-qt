@@ -3,15 +3,11 @@
 #ifndef KNM_PPPSETTING_H
 #define KNM_PPPSETTING_H
 
-#include <kglobal.h>
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
 #include "setting.h"
-#include "knminternals_export.h"
+
 namespace Knm
 {
-
-    class KNMINTERNALS_EXPORT PppSetting : public Setting
+    class PppSetting : public Setting
     {
         public:
 

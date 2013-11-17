@@ -67,6 +67,6 @@ add_executable( ${PROJECT_NAME}
     ${RESOURCES_QRC}
     ${HEADERS_MOC}
 )
-#add_dependencies(${PROJECT_NAME} knm )
+
 target_link_libraries( ${PROJECT_NAME} NetworkManagerQt knmclient knm_nm knminternals ModemManagerQt ${QT_LIBRARIES} ${QT_QTDECLARATIVE_LIBRARY} )
 install( TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin )

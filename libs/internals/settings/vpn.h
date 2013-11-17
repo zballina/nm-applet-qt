@@ -4,16 +4,11 @@
 #define KNM_VPNSETTING_H
 
 #include <NetworkManagerQt/generic-types.h>
-#include <kglobal.h>
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
 #include "setting.h"
-#include "knminternals_export.h"
 
 namespace Knm
 {
-
-    class KNMINTERNALS_EXPORT VpnSetting : public Setting
+    class VpnSetting : public Setting
     {
         public:
 

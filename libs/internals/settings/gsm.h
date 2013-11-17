@@ -3,15 +3,11 @@
 #ifndef KNM_GSMSETTING_H
 #define KNM_GSMSETTING_H
 
-#include <kglobal.h>
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
 #include "setting.h"
-#include "knminternals_export.h"
+
 namespace Knm
 {
-
-    class KNMINTERNALS_EXPORT GsmSetting : public Setting
+    class GsmSetting : public Setting
     {
         public:
 

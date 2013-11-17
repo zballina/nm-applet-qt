@@ -10,7 +10,25 @@ include_directories(
 
 ## next target: internals layer library
 
-set(knm_nm_LIB_SRCS
+set(knm_nm_LIB_HEADERS
+
+   nmdbusactiveconnectionmonitor.h
+
+   #org.freedesktop.NetworkManager.Settings.Connection.Active
+   nm-active-connectioninterface.h
+
+   #org.freedesktop.NetworkManager.Settings.VPN.Connection
+   nm-vpn-connectioninterface.h
+
+   nmdbussettingsconnectionprovider.h
+   nmdbussecretagent.h
+
+   remoteconnection.h
+   nm-settingsinterface.h
+   nm-settings-connectioninterface.h
+)
+
+set(knm_nm_LIB_SOURCES
 
    connectiondbus.cpp
 
@@ -73,8 +91,12 @@ link_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/../../libs/service
 )
 
+qt4_wrap_cpp(MOC
+    ${knm_nm_LIB_HEADERS}
+)
+
 add_library(
-    knm_nm SHARED ${knm_nm_LIB_SRCS} 
+    knm_nm SHARED ${MOC} ${knm_nm_LIB_SOURCES} 
 )
 target_link_libraries(knm_nm ${QT_QTGUI_LIBRARY} ModemManagerQt NetworkManagerQt knminternals knmservice ${QT_QTNETWORK_LIBRARY})
 

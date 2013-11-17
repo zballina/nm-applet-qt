@@ -5,8 +5,6 @@
 
 #include <nm-setting-ip4-config.h>
 
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
 #include "settingdbus.h"
 #include "nm09dbus_export.h"
 

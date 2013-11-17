@@ -3,16 +3,14 @@
 #ifndef KNM_SECURITY8021XSETTING_H
 #define KNM_SECURITY8021XSETTING_H
 
-#include <QFile>
-#include <kglobal.h>
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
+#include <QtCore/QFile>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtCore/QDebug>
 #include "setting.h"
-#include "knminternals_export.h"
 namespace Knm
 {
-
-    class KNMINTERNALS_EXPORT Security8021xSetting : public Setting
+    class Security8021xSetting : public Setting
     {
         public:
             class EnumPhase1peapver
@@ -712,7 +710,7 @@ namespace Knm
                     eap.append("peap");
                 if (methods.testFlag(leap))
                     eap.append("leap");
-                kDebug() << eap;
+                qDebug() << eap;
                 setEap(eap);
             }
 

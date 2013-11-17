@@ -3,15 +3,12 @@
 #ifndef KNM_WIRELESSSECURITYSETTING_H
 #define KNM_WIRELESSSECURITYSETTING_H
 
-#include <kglobal.h>
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
 #include "setting.h"
-#include "knminternals_export.h"
+#include <QtCore/QStringList>
+
 namespace Knm
 {
-
-    class KNMINTERNALS_EXPORT WirelessSecuritySetting : public Setting
+    class WirelessSecuritySetting : public Setting
     {
         public:
             class EnumSecurityType

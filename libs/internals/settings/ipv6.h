@@ -3,18 +3,14 @@
 #ifndef KNM_IPV6SETTING_H
 #define KNM_IPV6SETTING_H
 
-#include <QHostAddress>
-#include <kglobal.h>
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
+#include <QtNetwork/QHostAddress>
 #include "NetworkManagerQt/ipconfig.h"
 #include "setting.h"
-#include "knminternals_export.h"
 
 namespace Knm
 {
 
-    class KNMINTERNALS_EXPORT Ipv6Setting : public Setting
+    class Ipv6Setting : public Setting
     {
         public:
             class EnumMethod

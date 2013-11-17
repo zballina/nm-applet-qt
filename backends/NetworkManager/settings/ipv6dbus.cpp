@@ -3,6 +3,7 @@
 
 #include "ipv6dbus.h"
 
+#include <QtCore/QDebug>
 #include <arpa/inet.h>
 #include <NetworkManagerQt/generic-types.h>
 #include "ipv6.h"
@@ -17,9 +18,9 @@ Ipv6Dbus::~Ipv6Dbus()
 
 void Ipv6Dbus::fromMap(const QVariantMap &map)
 {
-    /*kDebug() << "IPv6 map: ";
+    /*qDebug() << "IPv6 map: ";
     foreach(const QString &key, map.keys())
-        kDebug() << key << " : " << map.value(key);*/
+        qDebug() << key << " : " << map.value(key);*/
 
     Knm::Ipv6Setting *setting = static_cast<Knm::Ipv6Setting *>(m_setting);
 
@@ -82,7 +83,7 @@ void Ipv6Dbus::fromMap(const QVariantMap &map)
         {
             if (addressMap.address.isEmpty() || !addressMap.netMask || addressMap.gateway.isEmpty())
             {
-                kWarning() << "Invalid address format detected.";
+                qWarning() << "Invalid address format detected.";
                 continue;
             }
             Q_IPV6ADDR ip, gateway;
@@ -101,7 +102,7 @@ void Ipv6Dbus::fromMap(const QVariantMap &map)
             address.setGateway(QHostAddress(gateway));
             if (!address.isValid())
             {
-                kWarning() << "Invalid address format detected.";
+                qWarning() << "Invalid address format detected.";
                 continue;
             }
 
@@ -130,7 +131,7 @@ void Ipv6Dbus::fromMap(const QVariantMap &map)
         {
             if (routeMap.route.isEmpty() || !routeMap.prefix || routeMap.nextHop.isEmpty() || !routeMap.metric)
             {
-                kWarning() << "Invalid route format detected.";
+                qWarning() << "Invalid route format detected.";
                 continue;
             }
             Q_IPV6ADDR addr, nexthop;
@@ -150,7 +151,7 @@ void Ipv6Dbus::fromMap(const QVariantMap &map)
             route.setMetric(routeMap.metric);
             if (!route.isValid())
             {
-                kWarning() << "Invalid route format detected.";
+                qWarning() << "Invalid route format detected.";
                 continue;
             }
 
@@ -212,7 +213,7 @@ Knm::Ipv6Setting::EnumMethod::type Ipv6Dbus::methodStringToEnum(QString method)
                             return Knm::Ipv6Setting::EnumMethod::Ignore;
                         else
                         {
-                            kDebug() << "Unknown method given:" << method;
+                            qDebug() << "Unknown method given:" << method;
                             return Knm::Ipv6Setting::EnumMethod::Automatic;
                         }
 }

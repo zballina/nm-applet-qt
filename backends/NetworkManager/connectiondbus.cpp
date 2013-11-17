@@ -21,6 +21,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "connectiondbus.h"
 
+#include <QtCore/QDebug>
 #include <nm-setting-connection.h>
 #include <nm-setting-wired.h>
 #include <nm-setting-wireless.h>
@@ -250,7 +251,7 @@ NMVariantMapMap ConnectionDbus::toDbusMap()
     }
     if (!mapMap.contains(dbusConnectionType))
     {
-        kWarning() << "The setting group for the specified connection type" << dbusConnectionType << "is missing, expect a bumpy ride!";
+        qWarning() << "The setting group for the specified connection type" << dbusConnectionType << "is missing, expect a bumpy ride!";
     }
     return mapMap;
 }
@@ -384,7 +385,7 @@ void ConnectionDbus::fromDbusMap(const NMVariantMapMap &settings)
         }
         else
         {
-            kWarning() << "Setting " << setting->name() << "not initialized";
+            qWarning() << "Setting " << setting->name() << "not initialized";
             setting->setInitialized(false);
         }
     }

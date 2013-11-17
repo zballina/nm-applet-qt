@@ -3,16 +3,11 @@
 #ifndef KNM_BLUETOOTH_H
 #define KNM_BLUETOOTH_H
 
-#include <kglobal.h>
-#include <kconfigskeleton.h>
-#include <kdebug.h>
 #include "setting.h"
-#include "knminternals_export.h"
 
 namespace Knm
 {
-
-    class KNMINTERNALS_EXPORT BluetoothSetting : public Setting
+    class BluetoothSetting : public Setting
     {
         public:
 

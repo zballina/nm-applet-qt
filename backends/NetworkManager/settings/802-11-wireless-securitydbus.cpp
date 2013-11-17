@@ -3,6 +3,7 @@
 
 #include "802-11-wireless-securitydbus.h"
 
+#include <QtCore/QDebug>
 #include <wpasecretidentifier.h>
 
 #include "config-nm09backend.h"
@@ -251,7 +252,7 @@ QVariantMap WirelessSecurityDbus::toSecretsMap()
                 if (setting->wepKeyType() == Knm::WirelessSecuritySetting::Passphrase)
                     map.insert(QLatin1String(NM_SETTING_WIRELESS_SECURITY_WEP_KEY_TYPE), 2);
                 else
-                    kWarning() << "Wep key type is not set!";
+                    qWarning() << "Wep key type is not set!";
             map.insert(QLatin1String(NM_SETTING_WIRELESS_SECURITY_WEP_TX_KEYIDX), setting->weptxkeyindex());
             if (!setting->wepkey0().isEmpty())
             {
@@ -298,16 +299,16 @@ QString WirelessSecurityDbus::hashWpaPsk(const QString &plainText)
     QString result;
 //#ifdef NM_0_7_1
 #if 0
-    kDebug() << "Built for NetworkManager that can hash WPA keys itself; passing through plaintext";
+    qDebug() << "Built for NetworkManager that can hash WPA keys itself; passing through plaintext";
     result = plainText.toLocal8Bit();
-    kDebug() << "  plaintext out:" << result;
+    qDebug() << "  plaintext out:" << result;
 #else
 #define WPA_PMK_LEN 32
-    //kDebug() << "Hashing PSK. essid:" << m_essid << "psk:" << plainText;
+    //qDebug() << "Hashing PSK. essid:" << m_essid << "psk:" << plainText;
     QByteArray buffer(WPA_PMK_LEN * 2, 0);
     pbkdf2_sha1(plainText.toLatin1(), m_essid.toLatin1(), m_essid.size(), 4096, (quint8 *)buffer.data(), WPA_PMK_LEN);
     result = buffer.toHex().left(WPA_PMK_LEN * 2);
-    //kDebug() << "  hexadecimal key out:" << result;
+    //qDebug() << "  hexadecimal key out:" << result;
 #endif
     return result;
 
@@ -315,10 +316,10 @@ QString WirelessSecurityDbus::hashWpaPsk(const QString &plainText)
 
 QString WirelessSecurityDbus::hashWepPassphrase(const QString &plainText)
 {
-    //kDebug() << "Hashing wep passphrase, essid: " << essid << " passphrase: " << passphrase;
+    //qDebug() << "Hashing wep passphrase, essid: " << essid << " passphrase: " << passphrase;
     QString hexHash = wep128PassphraseHash(plainText.toAscii());
-    //kDebug() << "Hexadecimal key out:" << hexHash;
-    //kDebug() << "for wep key: " << wepkey;
+    //qDebug() << "Hexadecimal key out:" << hexHash;
+    //qDebug() << "for wep key: " << wepkey;
 
     return hexHash;
 }

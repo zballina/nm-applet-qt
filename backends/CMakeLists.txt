@@ -1,5 +1,1 @@
 add_subdirectory(NetworkManager)
-
-if (I_KNOW_WICD_BACKEND_IS_BROKEN_AND_I_LIKE_TO_HURT_MYSELF)
-add_subdirectory(wicd)
-endif (I_KNOW_WICD_BACKEND_IS_BROKEN_AND_I_LIKE_TO_HURT_MYSELF)

@@ -3,15 +3,13 @@
 #ifndef KNM_WIRELESSSETTING_H
 #define KNM_WIRELESSSETTING_H
 
-#include <kglobal.h>
-#include <kdebug.h>
-#include <kcoreconfigskeleton.h>
 #include "setting.h"
-#include "knminternals_export.h"
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+
 namespace Knm
 {
-
-    class KNMINTERNALS_EXPORT WirelessSetting : public Setting
+    class WirelessSetting : public Setting
     {
         public:
             class EnumMode

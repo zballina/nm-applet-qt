@@ -83,7 +83,7 @@ void GsmInterfaceConnectionBuilder::init(GsmInterfaceConnection *ic)
     // To force loading ModemManager backend
     if (ModemManager::notifier())
     {
-        kDebug() << "Loading ModemManager backend";
+        qDebug() << "Loading ModemManager backend";
     }
 
     ModemManager::ModemGsmNetworkInterface::Ptr modemNetworkIface;

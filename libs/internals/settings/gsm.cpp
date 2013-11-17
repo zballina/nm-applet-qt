@@ -2,6 +2,9 @@
 // All changes you do to this file will be lost.
 
 #include "gsm.h"
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+
 
 using namespace Knm;
 

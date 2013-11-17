@@ -4,7 +4,18 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-set(knmclient_SRCS
+set(knmclient_HEADERS
+   remoteactivatable.h
+   remoteinterfaceconnection.h
+   remoteunconfiguredinterface.h
+   remotevpninterfaceconnection.h
+   remotewirelessinterfaceconnection.h
+   remotewirelessnetwork.h
+   remoteactivatablelist.h
+   remotegsminterfaceconnection.h
+)
+
+set(knmclient_SOURCES
    remoteactivatable.cpp
    remoteinterfaceconnection.cpp
    remoteunconfiguredinterface.cpp
@@ -21,48 +32,50 @@ set_source_files_properties( ../service/interfaces/org.kde.networkmanagement.xml
 QT4_ADD_DBUS_INTERFACE(knmclient_SRCS
    ../service/interfaces/org.kde.networkmanagement.xml
    networkmanagementinterface
-   )
+)
 
 set_source_files_properties( ../service/interfaces/org.kde.networkmanagement.activatable.xml PROPERTIES NO_NAMESPACE TRUE CLASSNAME ActivatableInterface)
 
 QT4_ADD_DBUS_INTERFACE(knmclient_SRCS
    ../service/interfaces/org.kde.networkmanagement.activatable.xml
    activatableinterface
-   )
+)
 
 set_source_files_properties( ../service/interfaces/org.kde.networkmanagement.interfaceconnection.xml PROPERTIES NO_NAMESPACE TRUE CLASSNAME InterfaceConnectionInterface)
 
 QT4_ADD_DBUS_INTERFACE(knmclient_SRCS
    ../service/interfaces/org.kde.networkmanagement.interfaceconnection.xml
    interfaceconnectioninterface
-   )
+)
 
 set_source_files_properties( ../service/interfaces/org.kde.networkmanagement.wirelessinterfaceconnection.xml PROPERTIES NO_NAMESPACE TRUE CLASSNAME WirelessInterfaceConnectionInterface)
 
 QT4_ADD_DBUS_INTERFACE(knmclient_SRCS
    ../service/interfaces/org.kde.networkmanagement.wirelessinterfaceconnection.xml
    wirelessinterfaceconnectioninterface
-   )
+)
 
 set_source_files_properties( ../service/interfaces/org.kde.networkmanagement.wirelessnetwork.xml PROPERTIES NO_NAMESPACE TRUE CLASSNAME WirelessNetworkInterface)
 
 QT4_ADD_DBUS_INTERFACE(knmclient_SRCS
    ../service/interfaces/org.kde.networkmanagement.wirelessnetwork.xml
    wirelessnetworkinterface
-   )
+)
 
 set_source_files_properties( ../service/interfaces/org.kde.networkmanagement.gsminterfaceconnection.xml PROPERTIES NO_NAMESPACE TRUE CLASSNAME GsmInterfaceConnectionInterface)
 
 QT4_ADD_DBUS_INTERFACE(knmclient_SRCS
    ../service/interfaces/org.kde.networkmanagement.gsminterfaceconnection.xml
    gsminterfaceconnectioninterface
-   )
-
-add_library(
-    knmclient SHARED ${knmclient_SRCS}
 )
 
-target_link_libraries(knmclient ${QT_QTCORE_LIBRARY} ${QT_QTDBUS_LIBRARY} NetworkManagerQt)
+qt4_wrap_cpp(HEADERS_MOC ${knmclient_HEADERS})
+
+add_library(knmclient 
+    SHARED ${knmclient_SRCS} ${HEADERS_MOC} ${knmclient_SOURCES}
+)
+
+target_link_libraries(knmclient ${QT_QTCORE_LIBRARY} ${QT_QTDBUS_LIBRARY} ${QT_QTNETWORK_LIBRARY} NetworkManagerQt)
 
 set_target_properties(knmclient PROPERTIES
    VERSION ${GENERIC_LIB_VERSION}
