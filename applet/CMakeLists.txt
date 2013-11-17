@@ -24,6 +24,7 @@ set( SOURCES_FILES
     connectionitem.cpp
     declarativeinterfaceitem.cpp
     interfaceslistmodel.cpp
+    nmdialog.cpp
     ../libs/service/events.cpp
 )
 
@@ -34,6 +35,7 @@ set( HEADERS_FILES
     connectionitem.h
     declarativeinterfaceitem.h
     interfaceslistmodel.h
+    nmdialog.h
 )
 
 set( RESOURCES_FILES
@@ -42,7 +44,7 @@ set( RESOURCES_FILES
 
 set( UIS_FILES
     ui/about.ui
-    ui/networkmanagerapplet.ui
+    ui/nmdialog.ui
 )
 
 include( ${QT_USE_FILE} )

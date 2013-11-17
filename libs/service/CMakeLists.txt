@@ -192,5 +192,3 @@ set_target_properties(knmservice PROPERTIES
 )
 
 install(TARGETS knmservice DESTINATION lib${LIB_SUFFIX})
-
-

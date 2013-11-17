@@ -46,7 +46,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "../libs/service/events.h"
 
-//K_GLOBAL_STATIC_WITH_ARGS(KComponentData, s_networkManagementComponentData, ("networkmanagement", "networkmanagement", KComponentData::SkipMainComponentRegistration))
 static const int m_iconSize = 48;
 
 ConnectionItem::ConnectionItem(RemoteActivatable *activatable, ItemType type, QObject *parent) :
