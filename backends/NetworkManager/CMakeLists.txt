@@ -8,8 +8,6 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-## next target: internals layer library
-
 set(knm_nm_LIB_HEADERS
 
    nmdbusactiveconnectionmonitor.h

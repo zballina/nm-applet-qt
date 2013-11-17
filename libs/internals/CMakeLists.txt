@@ -6,8 +6,6 @@ include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../../libs
 )
 
-## next target: internals layer library
-
 set(knminternals_PUB_HDRS
     activatable.h
     environment.h
@@ -30,33 +28,18 @@ set(knminternals_SOURCES
    environment.cpp
    setting.cpp
 
-   #settings/pbkdf2.cpp
-   #settings/wephash.cpp
-
    settings/802-11-wireless-security.cpp
-
    settings/802-11-wireless.cpp
-
    settings/802-3-ethernet.cpp
-
    settings/802-1x.cpp
-
    settings/gsm.cpp
-
    settings/cdma.cpp
-
    settings/ipv4.cpp
-
    settings/ipv6.cpp
-
    settings/ppp.cpp
-
    settings/pppoe.cpp
-
    settings/serial.cpp
-
    settings/vpn.cpp
-
    settings/bluetooth.cpp
 
    activatable.cpp

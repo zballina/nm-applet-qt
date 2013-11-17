@@ -55,7 +55,7 @@ set(knmservice_SOURCES
     connectionlist.cpp
 
    # handles storage of secrets
-#secretstorage.cpp
+    #secretstorage.cpp
 
    #defines interface for objects storing secrets
     secretsprovider.cpp
@@ -81,7 +81,7 @@ set(knmservice_SOURCES
    activatableobserver.cpp
 
    # simple debug output observer
-#activatabledebug.cpp
+    #activatabledebug.cpp
 
    # configures unconfigured devices and new wireless networks on demand and connects them
     configurationlauncher.cpp
@@ -96,7 +96,7 @@ set(knmservice_SOURCES
     vpninterfaceconnectionprovider.cpp
 
    # performs KNotifications on events
-#notificationmanager.cpp
+    #notificationmanager.cpp
 
    # static global definitions of event string ids
    events.cpp

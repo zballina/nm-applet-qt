@@ -1,4 +1,4 @@
-project(nmapplet-qt)
+project(nm-applet-qt)
 cmake_minimum_required(VERSION 2.8)
 
 set(MAJOR_VERSION 0)
@@ -69,7 +69,6 @@ if (NETWORKMANAGER_FOUND)
         add_subdirectory(backends)
         add_subdirectory(libs)
 
-        #install( FILES networkmanagement.notifyrc DESTINATION ${DATA_INSTALL_DIR}/networkmanagement )
     else()
         message(FATAL_ERROR "ERROR: NetworkManager version '${NETWORKMANAGER_VERSION}' does not match minimum required (${MINIMUM_NM_VERSION_REQUIRED})")
     endif()
