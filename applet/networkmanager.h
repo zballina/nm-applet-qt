@@ -56,6 +56,7 @@ class NetworkManagerApplet : public QSystemTrayIcon
         void vpnActivationStateChanged(Knm::InterfaceConnection::ActivationState, Knm::InterfaceConnection::ActivationState);
         void activatablesDisappeared();
 
+        void clearActivatedOverlay();
         void resetActiveSystrayInterface();
         void updateActiveInterface(bool);
         void setupAccessPointSignals(const QString &);

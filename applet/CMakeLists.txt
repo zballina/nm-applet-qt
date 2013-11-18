@@ -25,6 +25,7 @@ set( SOURCES_FILES
     declarativeinterfaceitem.cpp
     interfaceslistmodel.cpp
     nmdialog.cpp
+    menusettings.cpp
     ../libs/service/events.cpp
 )
 
@@ -36,6 +37,7 @@ set( HEADERS_FILES
     declarativeinterfaceitem.h
     interfaceslistmodel.h
     nmdialog.h
+    menusettings.h
 )
 
 set( RESOURCES_FILES

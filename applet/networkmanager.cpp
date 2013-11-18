@@ -1,5 +1,6 @@
 #include "networkmanager.h"
 #include "nmdialog.h"
+#include "menusettings.h"
 #include "uiutils.h"
 
 #include <QtGui/QMessageBox>
@@ -16,6 +17,7 @@ public:
     Private(): m_popup(0) { }
 
     NMDialog * m_popup;
+    MenuSettings *m_settings;
     QList<QAction*> actions;
 };
 
@@ -27,8 +29,7 @@ NetworkManagerApplet::NetworkManagerApplet(QObject *parent) :
     m_activeSystrayInterface(0),
     d(new Private())
 {
-    QIcon defaultIcon(":/icons/nm-applet-qt.svg");
-    setIcon(defaultIcon);
+    setIcon(QIcon(":/icons/nm-applet-qt.svg"));
 
     m_activeInterfaceState = NetworkManager::Device::UnknownState;
     updateInterfaceList();
@@ -44,7 +45,8 @@ NetworkManagerApplet::NetworkManagerApplet(QObject *parent) :
     connect(m_activatables, SIGNAL(activatableAdded(RemoteActivatable*,int)), this, SLOT(activatableAdded(RemoteActivatable*)));
     connect(m_activatables, SIGNAL(activatableRemoved(RemoteActivatable*)), this, SLOT(activatableRemoved(RemoteActivatable*)));
     connect(m_activatables, SIGNAL(disappeared()), this, SLOT(activatablesDisappeared()));
-    connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+
+    init();
 }
 
 NetworkManagerApplet::~NetworkManagerApplet()
@@ -64,6 +66,8 @@ void NetworkManagerApplet::init()
     setupInterfaceSignals();
 
     d->m_popup = new NMDialog(m_activatables);
+    d->m_settings = new MenuSettings();
+    setContextMenu(d->m_settings);
 
     QAction* action = new QAction(tr("CheckBox to enable or disable networking completely", "Enable networking"), this);
     action->setToolTip(tr("@info:tooltip tooltip for the 'Enable networking' checkbox", "Enable or disable the networking system"));
@@ -79,13 +83,17 @@ void NetworkManagerApplet::init()
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.connect("org.kde.kded", "/org/kde/networkmanagement", "org.kde.networkmanagement", "ModuleReady", this, SLOT(finishInitialization()));
 
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.networkmanagement")) {
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.networkmanagement"))
+    {
         QTimer::singleShot(0, this, SLOT(finishInitialization()));
-    } else {
+    }
+    else
+    {
         QDBusInterface kded(QLatin1String("org.kde.kded"), QLatin1String("/kded"),
                             QLatin1String("org.kde.kded"), QDBusConnection::sessionBus());
         kded.asyncCall(QLatin1String("loadModule"), QLatin1String("networkmanagement"));
     }
+    connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 }
 
 void NetworkManagerApplet::iconActivated(QSystemTrayIcon::ActivationReason reason)
@@ -429,6 +437,15 @@ void NetworkManagerApplet::interfaceConnectionStateChanged()
         m_activeSystrayInterfaceState = state;
     }
     updatePixmap();
+}
+
+void NetworkManagerApplet::clearActivatedOverlay()
+{
+    if (m_activeInterface && static_cast<NetworkManager::Device::State>(m_activeInterface->state()) == NetworkManager::Device::Activated) {
+        // Clear the overlay, but only if we are still activated
+
+        //setStatusOverlay(QPixmap());
+    }
 }
 
 /*

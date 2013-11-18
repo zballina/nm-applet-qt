@@ -59,6 +59,7 @@ RemoteActivatableList::RemoteActivatableList(QObject *parent)
             this);
     connect(d->registrationWatcher, SIGNAL(serviceRegistered(QString)), SLOT(serviceRegistered()));
     connect(d->registrationWatcher, SIGNAL(serviceUnregistered(QString)), SLOT(serviceUnregistered()));
+    qDebug() << "Constructor RemoteActivatableList";
 }
 
 void RemoteActivatableList::init()
@@ -75,6 +76,7 @@ void RemoteActivatableList::init()
         {
             d->iface->ReEmitActivatableList();
         }
+        qDebug() << "init remote activatable list";
     }
 }
 

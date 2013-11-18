@@ -26,7 +26,6 @@ NMDialog::NMDialog(RemoteActivatableList * activatableList, QWidget *parent) :
 
     connect(listModel, SIGNAL(showInterfaceDetails(QString)), SLOT(showInterfaceDetails(QString)));
     connect(interfaceListModel, SIGNAL(updateTraffic(DeclarativeInterfaceItem*)), this, SLOT(manageUpdateTraffic(DeclarativeInterfaceItem*)));
-    connect(this, SIGNAL(finished()), this, SLOT(createActions()));
     connect(NetworkManager::notifier(), SIGNAL(wirelessEnabledChanged(bool)),
             this, SLOT(managerWirelessEnabledChanged(bool)));
     connect(NetworkManager::notifier(), SIGNAL(wirelessHardwareEnabledChanged(bool)),
@@ -48,10 +47,11 @@ NMDialog::NMDialog(RemoteActivatableList * activatableList, QWidget *parent) :
     connect(NetworkManager::notifier(), SIGNAL(networkingEnabledChanged(bool)),
             SLOT(managerNetworkingEnabledChanged(bool)));
 
-    ui->listView->setModel(listModel);
-//    QDBusConnection dbus = QDBusConnection::sessionBus();
-//    dbus.connect("org.kde.Solid.PowerManagement", "/org/kde/Solid/PowerManagement", "org.kde.Solid.PowerManagement", "resumingFromSuspend", this, SLOT(readConfig()));
-//    dbus.connect("org.kde.kded", "/org/kde/networkmanagement", "org.kde.networkmanagement", "ReloadConfig", this, SLOT(readConfig()));
+    ui->tableView->setModel(listModel);
+    createActions();
+    QDBusConnection dbus = QDBusConnection::sessionBus();
+    dbus.connect("org.kde.Solid.PowerManagement", "/org/kde/Solid/PowerManagement", "org.kde.Solid.PowerManagement", "resumingFromSuspend", this, SLOT(readConfig()));
+    dbus.connect("org.kde.kded", "/org/kde/networkmanagement", "org.kde.networkmanagement", "ReloadConfig", this, SLOT(readConfig()));
 }
 
 NMDialog::~NMDialog()

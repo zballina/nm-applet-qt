@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 {
     Q_INIT_RESOURCE(resources);
 
-    QApplication::setApplicationName("nmapplet-qt");
+    QApplication::setApplicationName("nm-applet-qt");
 #ifdef STR_VERSION
     QApplication::setApplicationVersion(QString("%1").arg(STR_VERSION));
 #endif
