@@ -2,6 +2,7 @@
 #include "nmdialog.h"
 #include "menusettings.h"
 #include "uiutils.h"
+#include "service.h"
 
 #include <QtGui/QMessageBox>
 #include <NetworkManagerQt/Manager>
@@ -18,7 +19,8 @@ public:
 
     NMDialog * m_popup;
     MenuSettings *m_settings;
-    QList<QAction*> actions;
+    QList<QAction*> m_actions;
+    NetworkManagementService *m_service;
 };
 
 NetworkManagerApplet::NetworkManagerApplet(QObject *parent) :
@@ -30,7 +32,7 @@ NetworkManagerApplet::NetworkManagerApplet(QObject *parent) :
     d(new Private())
 {
     setIcon(QIcon(":/icons/nm-applet-qt.svg"));
-
+            
     m_activeInterfaceState = NetworkManager::Device::UnknownState;
     updateInterfaceList();
 
@@ -67,6 +69,7 @@ void NetworkManagerApplet::init()
 
     d->m_popup = new NMDialog(m_activatables);
     d->m_settings = new MenuSettings();
+    d->m_service = new NetworkManagementService(this);
     setContextMenu(d->m_settings);
 
     QAction* action = new QAction(tr("CheckBox to enable or disable networking completely", "Enable networking"), this);
@@ -77,22 +80,19 @@ void NetworkManagerApplet::init()
     connect(NetworkManager::notifier(), SIGNAL(networkingEnabledChanged(bool)),
             action, SLOT(setChecked(bool)));
 
-    d->actions.append(action);
-    //setGraphicsWidget(d->m_popup);
+    d->m_actions.append(action);
 
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.connect("org.kde.kded", "/org/kde/networkmanagement", "org.kde.networkmanagement", "ModuleReady", this, SLOT(finishInitialization()));
 
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.networkmanagement"))
-    {
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.networkmanagement")) {
         QTimer::singleShot(0, this, SLOT(finishInitialization()));
+        qDebug() << "Servicio esta registrado";
+    } 
+    else{
+        qDebug() << "Falta registrar";
     }
-    else
-    {
-        QDBusInterface kded(QLatin1String("org.kde.kded"), QLatin1String("/kded"),
-                            QLatin1String("org.kde.kded"), QDBusConnection::sessionBus());
-        kded.asyncCall(QLatin1String("loadModule"), QLatin1String("networkmanagement"));
-    }
+
     connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 }
 

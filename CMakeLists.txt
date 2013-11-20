@@ -68,6 +68,7 @@ if (NETWORKMANAGER_FOUND)
         add_subdirectory(applet)
         add_subdirectory(backends)
         add_subdirectory(libs)
+        add_subdirectory(kded)
 
     else()
         message(FATAL_ERROR "ERROR: NetworkManager version '${NETWORKMANAGER_VERSION}' does not match minimum required (${MINIMUM_NM_VERSION_REQUIRED})")

@@ -47,16 +47,23 @@ NMDialog::NMDialog(RemoteActivatableList * activatableList, QWidget *parent) :
     connect(NetworkManager::notifier(), SIGNAL(networkingEnabledChanged(bool)),
             SLOT(managerNetworkingEnabledChanged(bool)));
 
-    ui->tableView->setModel(listModel);
+    connect(ui->checkBoxShowMore, SIGNAL(toggled(bool)), listModel, SLOT(showMore(bool)));
+    ui->connectionsList->setModel(listModel);
+    listItemDelegate = new ListItemDelegate;
+    ui->connectionsList->setItemDelegate(listItemDelegate);
+
     createActions();
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.connect("org.kde.Solid.PowerManagement", "/org/kde/Solid/PowerManagement", "org.kde.Solid.PowerManagement", "resumingFromSuspend", this, SLOT(readConfig()));
     dbus.connect("org.kde.kded", "/org/kde/networkmanagement", "org.kde.networkmanagement", "ReloadConfig", this, SLOT(readConfig()));
+
+    qDebug() << "rowCount" << listModel->rowCount();
 }
 
 NMDialog::~NMDialog()
 {
     delete ui;
+    delete listItemDelegate;
 }
 
 void NMDialog::createActions()

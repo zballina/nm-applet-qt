@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef CONNECTION_ITEM_H
 #define CONNECTION_ITEM_H
 
+#include <QtGui/QItemDelegate>
 #include "remoteactivatable.h"
 #include "remotewirelessinterfaceconnection.h"
 #include "remotewirelessnetwork.h"

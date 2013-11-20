@@ -4,6 +4,7 @@ include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/..
    ${CMAKE_CURRENT_SOURCE_DIR}/../internals
    ${CMAKE_CURRENT_BINARY_DIR}/../internals
+   ${CMAKE_CURRENT_SOURCE_DIR}/../backends/NetworkManager
 )
 
 set(knmservice_HEADERS

@@ -6,7 +6,9 @@ include_directories(
     ${CMAKE_INCLUDE_PATH}
     ${CMAKE_CURRENT_SOURCE_DIR}/../libs/client
     ${CMAKE_CURRENT_SOURCE_DIR}/../libs/internals
+    ${CMAKE_CURRENT_SOURCE_DIR}/../kded
     ${CMAKE_CURRENT_SOURCE_DIR}/../backends/NetworkManager
+    ${CMAKE_CURRENT_BINARY_DIR}/../kded
     ${CMAKE_CURRENT_BINARY_DIR}/../libs/client
     ${CMAKE_CURRENT_BINARY_DIR}/../libs/internals
     ${CMAKE_CURRENT_BINARY_DIR}/../backends/NetworkManager
@@ -24,6 +26,8 @@ set( SOURCES_FILES
     connectionitem.cpp
     declarativeinterfaceitem.cpp
     interfaceslistmodel.cpp
+    listitem.cpp
+    listitemdelegate.cpp
     nmdialog.cpp
     menusettings.cpp
     ../libs/service/events.cpp
@@ -36,6 +40,8 @@ set( HEADERS_FILES
     connectionitem.h
     declarativeinterfaceitem.h
     interfaceslistmodel.h
+    listitem.h
+    listitemdelegate.h
     nmdialog.h
     menusettings.h
 )
@@ -47,6 +53,7 @@ set( RESOURCES_FILES
 set( UIS_FILES
     ui/about.ui
     ui/nmdialog.ui
+    ui/listitem.ui
 )
 
 include( ${QT_USE_FILE} )
@@ -63,6 +70,7 @@ link_directories(
     ${CMAKE_LIBRARY_PATH} 
     ${CMAKE_CURRENT_BINARY_DIR}/../libs/internals
     ${CMAKE_CURRENT_BINARY_DIR}/../libs/client
+    ${CMAKE_CURRENT_BINARY_DIR}/../kded    
 )
 add_executable( ${PROJECT_NAME}
     ${HEADERS_FILES}
@@ -72,5 +80,5 @@ add_executable( ${PROJECT_NAME}
     ${HEADERS_MOC}
 )
 
-target_link_libraries( ${PROJECT_NAME} NetworkManagerQt knmclient knm_nm knminternals ModemManagerQt ${QT_LIBRARIES} ${QT_QTDECLARATIVE_LIBRARY} )
+target_link_libraries( ${PROJECT_NAME} NetworkManagerQt knmclient knm_nm knminternals kded_networkmanagement ModemManagerQt ${QT_LIBRARIES} ${QT_QTDECLARATIVE_LIBRARY} )
 install( TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin )

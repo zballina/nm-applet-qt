@@ -5,6 +5,7 @@
 #include "connectionslistmodel.h"
 #include "interfaceslistmodel.h"
 #include "declarativeinterfaceitem.h"
+#include "listitemdelegate.h"
 
 namespace Ui {
 class NMDialog;
@@ -29,7 +30,6 @@ class NMDialog : public QDialog
         void manageConnections();
         void showInterfaceDetails(const QString & uni);
         void manageSelection();
-        //void changeSize(int w, int h);
 
     private Q_SLOTS:
         void readConfig();
@@ -44,17 +44,15 @@ class NMDialog : public QDialog
         void manageUpdateTraffic(DeclarativeInterfaceItem *device);
 
         void createActions();
-//        void qmlCreationFinished();
     private:
         void addInterfaceInternal(const NetworkManager::Device::Ptr &);
         ConnectionsListModel *listModel;
+        ListItemDelegate *listItemDelegate;
         InterfacesListModel *interfaceListModel;
         DeclarativeInterfaceItem *m_vpnItem;
         bool m_hasWirelessInterface;
         RemoteActivatableList* m_activatables;
         QMap<QString, QAction *> m_actions;
-        //        InterfaceDetailsWidget* m_interfaceDetails;
-//        QDeclarativeContext * m_rootContext;
         Ui::NMDialog *ui;
 };
 
