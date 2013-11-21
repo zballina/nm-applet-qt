@@ -98,12 +98,16 @@ void NetworkManagementService::finishInitialization()
 {
     Q_D(NetworkManagementService);
 
+    qDebug() << "NetworkManagementService::finishInitialization() -> disconnect(d->sessionAbstractedService, SIGNAL(DoFinishInitialization()), this, 0);";
     QObject::disconnect(d->sessionAbstractedService, SIGNAL(DoFinishInitialization()), this, 0);
 
+    qDebug() << "NetworkManagementService::finishInitialization() -> connectionList = new ConnectionList(this);";
     d->connectionList = new ConnectionList(this);
  
+    qDebug() << "NetworkManagementService::finishInitialization() -> activatableList = new ActivatableList(d->connectionList);";
     d->activatableList = new ActivatableList(d->connectionList);
 
+    qDebug() << "NetworkManagementService::finishInitialization() -> activatableList->registerObserver(d->sortedList);";
     d->activatableList->registerObserver(d->sortedList);
 
     // debug activatable changes

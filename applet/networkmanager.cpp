@@ -85,11 +85,13 @@ void NetworkManagerApplet::init()
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.connect("org.kde.kded", "/org/kde/networkmanagement", "org.kde.networkmanagement", "ModuleReady", this, SLOT(finishInitialization()));
 
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.networkmanagement")) {
-        QTimer::singleShot(0, this, SLOT(finishInitialization()));
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered("org.kde.networkmanagement"))
+    {
         qDebug() << "Servicio esta registrado";
+        QTimer::singleShot(0, this, SLOT(finishInitialization()));
     } 
-    else{
+    else
+    {
         qDebug() << "Falta registrar";
     }
 
@@ -127,16 +129,20 @@ void NetworkManagerApplet::updateInterfaceList()
 
 void NetworkManagerApplet::finishInitialization()
 {
+    qDebug() << "NetworkManagerApplet::finishInitialization() -> begin";
+
     // Finishes kded module initialization.
     QDBusInterface networkmanagement(QLatin1String("org.kde.networkmanagement"), QLatin1String("/org/kde/networkmanagement"),
                                      QLatin1String("org.kde.networkmanagement"), QDBusConnection::sessionBus());
 
+
+    qDebug() << "NetworkManagerApplet::finishInitialization() -> networkmanagement.call(QLatin1String(\"FinishInitialization\"));";
     networkmanagement.call(QLatin1String("FinishInitialization"));
 
     // m_activatables->init() must be called after SLOT(activatableAdded(RemoteActivatable*,int)) has been connected and
     // NMPopup has been allocated.
+    qDebug() << "NetworkManagerApplet::finishInitialization() -> m_activatables->init();";
     m_activatables->init();
-
     // this needs m_activables initialized so that it can get the connection name to add to the InterfaceItem.
     interfaceConnectionStateChanged();
 
@@ -147,6 +153,7 @@ void NetworkManagerApplet::finishInitialization()
                                   Q_ARG(NetworkManager::Device::State, NetworkManager::Device::UnknownState),
                                   Q_ARG(NetworkManager::Device::StateChangeReason, NetworkManager::Device::NoReason));
     }
+    qDebug() << "NetworkManagerApplet::finishInitialization() -> end";
 }
 
 void NetworkManagerApplet::vpnActivationStateChanged(Knm::InterfaceConnection::ActivationState oldState, Knm::InterfaceConnection::ActivationState newState)

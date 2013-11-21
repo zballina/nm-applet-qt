@@ -76,7 +76,7 @@ void RemoteActivatableList::init()
         {
             d->iface->ReEmitActivatableList();
         }
-        qDebug() << "init remote activatable list";
+        qDebug() << "Init remote activatable list" << d->activatables.count();
     }
 }
 

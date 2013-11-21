@@ -62,35 +62,45 @@ SessionAbstractedService::~SessionAbstractedService()
 void SessionAbstractedService::handleAdd(Knm::Activatable * added)
 {
     Q_D(SessionAbstractedService);
-    if (added) {
+    if (added)
+    {
         QVariantMap properties;
         if (added->activatableType() == Knm::Activatable::InterfaceConnection
-                || added->activatableType() == Knm::Activatable::VpnInterfaceConnection) {
+                || added->activatableType() == Knm::Activatable::VpnInterfaceConnection)
+        {
             Knm::InterfaceConnection * realObj = static_cast<Knm::InterfaceConnection*>(added);
             new InterfaceConnectionAdaptor(realObj);
             new ActivatableAdaptor(realObj);
             properties = realObj->toMap();
-        } else if (added->activatableType() == Knm::Activatable::WirelessInterfaceConnection
-                || added->activatableType() == Knm::Activatable::HiddenWirelessInterfaceConnection ) {
+        }
+        else if (added->activatableType() == Knm::Activatable::WirelessInterfaceConnection
+                || added->activatableType() == Knm::Activatable::HiddenWirelessInterfaceConnection )
+        {
             Knm::WirelessInterfaceConnection * realObj
                 = static_cast<Knm::WirelessInterfaceConnection*>(added);
             new WirelessInterfaceConnectionAdaptor(realObj);
             new InterfaceConnectionAdaptor(realObj);
             new ActivatableAdaptor(realObj);
             properties = realObj->toMap();
-        } else if (added->activatableType() == Knm::Activatable::WirelessNetwork) {
+        }
+        else if (added->activatableType() == Knm::Activatable::WirelessNetwork)
+        {
             Knm::WirelessNetwork * realObj
                 = static_cast<Knm::WirelessNetwork*>(added);
             new WirelessNetworkAdaptor(realObj);
             new ActivatableAdaptor(realObj);
             properties = realObj->toMap();
-        } else if (added->activatableType() == Knm::Activatable::GsmInterfaceConnection) {
+        }
+        else if (added->activatableType() == Knm::Activatable::GsmInterfaceConnection)
+        {
             Knm::GsmInterfaceConnection * realObj = static_cast<Knm::GsmInterfaceConnection*>(added);
             new GsmInterfaceConnectionAdaptor(realObj);
             new InterfaceConnectionAdaptor(realObj);
             new ActivatableAdaptor(realObj);
             properties = realObj->toMap();
-        } else {
+        }
+        else
+        {
             // do not put any other types on the bus
             return;
         }
@@ -98,7 +108,7 @@ void SessionAbstractedService::handleAdd(Knm::Activatable * added)
         QString path = nextObjectPath();
         d->adaptors.insert(added, path);
         QDBusConnection::sessionBus().registerObject(path, added);
-        //qDebug() << "registering object at " << path;
+        qDebug() << "registering object at " << path;
         properties.insert("path", path);
         properties.insert("activatableIndex", d->list->activatableIndex(added));
         emit ActivatableAdded(properties);
@@ -115,14 +125,15 @@ void SessionAbstractedService::handleRemove(Knm::Activatable * removed)
     Q_D(SessionAbstractedService);
     if (d->adaptors.contains(removed)) {
         QString path = d->adaptors.take(removed);
-//debug
 #if 0
-        if (removed->activatableType() == Knm::Activatable::InterfaceConnection ) {
+        if (removed->activatableType() == Knm::Activatable::InterfaceConnection )
+        {
             Knm::InterfaceConnection * realObj = static_cast<Knm::InterfaceConnection*>(removed);
             qDebug() << path << realObj->connectionUuid();
-        } else if (removed->activatableType() == Knm::Activatable::WirelessNetwork ) {
-            Knm::WirelessNetwork * realObj
-                = static_cast<Knm::WirelessNetwork*>(removed);
+        }
+        else if (removed->activatableType() == Knm::Activatable::WirelessNetwork )
+        {
+            Knm::WirelessNetwork * realObj = static_cast<Knm::WirelessNetwork*>(removed);
             qDebug() << path << realObj->ssid();
         }
 #endif
@@ -139,6 +150,8 @@ QStringList SessionAbstractedService::ListActivatables() const
             sortedPaths.append(d->adaptors[a]);
         }
     }
+
+    qDebug() << "SessionAbstractedService::ListActivatables()";
     return sortedPaths;
 }
 
@@ -153,6 +166,7 @@ void SessionAbstractedService::ReEmitActivatableList()
             emit ActivatableAdded(properties);
         }
     }
+    qDebug() << "SessionAbstractedService::ReEmitActivatableList()";
 }
 
 void SessionAbstractedService::ReadConfig()
@@ -162,7 +176,9 @@ void SessionAbstractedService::ReadConfig()
 
 void SessionAbstractedService::FinishInitialization()
 {
+    qDebug() << "SessionAbstractedService::FinishInitialization()";
     emit DoFinishInitialization();
+    qDebug() << "emit DoFinishInitialization()";
 }
 
 QString SessionAbstractedService::nextObjectPath()

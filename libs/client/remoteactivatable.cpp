@@ -50,7 +50,7 @@ void RemoteActivatable::init(const QVariantMap &properties)
 {
     Q_D(RemoteActivatable);
     d->activatableIface = new ActivatableInterface("org.kde.networkmanagement", properties["path"].toString(), QDBusConnection::sessionBus(), this);
-    //qDebug() << "ActivatableInterface is (" << d->activatableIface << ") on" << d_ptr;
+    qDebug() << "ActivatableInterface is (" << d->activatableIface << ") on" << d_ptr;
     connect(d->activatableIface, SIGNAL(activated()),
             this, SIGNAL(activated()));
     connect(d->activatableIface, SIGNAL(changed()),
