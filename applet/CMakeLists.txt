@@ -62,7 +62,7 @@ qt4_wrap_ui(UIS ${UIS_FILES} )
 qt4_wrap_cpp( HEADERS_MOC ${HEADERS_FILES} )
 qt4_add_resources( RESOURCES_QRC ${RESOURCES_FILES} )
 
-add_definitions( -Wall ${QT_DEFINITIONS} -DWITH_MODEMMANAGERQT=1)
+add_definitions(${QT_DEFINITIONS} -DWITH_MODEMMANAGERQT=1)
 link_directories( 
     ${MODEMMANAGERQT_LIBRARY_DIRS} 
     ${QTNETWORK_LIBRARY_DIRS} 

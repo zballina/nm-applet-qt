@@ -75,10 +75,10 @@ public:
 };
 
 NetworkManagementService::NetworkManagementService(QObject * parent, const QVariantList&)
-        : KDEDModule(parent), d_ptr(new NetworkManagementServicePrivate)
+        : QObject(parent), d_ptr(new NetworkManagementServicePrivate)
 {
     Q_D(NetworkManagementService);
-    KNetworkManagerServicePrefs::instance(Knm::NETWORKMANAGEMENT_RCFILE);
+//    KNetworkManagerServicePrefs::instance(Knm::NETWORKMANAGEMENT_RCFILE);
 
     NetworkManager::Device::Types types =
         (NetworkManager::Device::Ethernet

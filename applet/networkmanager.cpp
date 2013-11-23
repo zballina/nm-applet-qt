@@ -53,6 +53,7 @@ NetworkManagerApplet::NetworkManagerApplet(QObject *parent) :
 
 NetworkManagerApplet::~NetworkManagerApplet()
 {
+    delete m_activatables;
 }
 
 void NetworkManagerApplet::init()
@@ -207,6 +208,8 @@ void NetworkManagerApplet::updateWireless(bool checked)
 
 void NetworkManagerApplet::activatableAdded(RemoteActivatable *activatable)
 {
+    qDebug() << "NetworkManagerApplet::activatableAdded(RemoteActivatable *activatable)" << activatable->activatableType();
+
     RemoteInterfaceConnection *ic = qobject_cast<RemoteInterfaceConnection*>(activatable);
     if (activatable->activatableType() == Knm::Activatable::VpnInterfaceConnection)
     {

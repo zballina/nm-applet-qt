@@ -222,6 +222,7 @@ void RemoteActivatableList::serviceRegistered()
     }
     d->iface = new NetworkManagementInterface("org.kde.networkmanagement", "/org/kde/networkmanagement", QDBusConnection::sessionBus(), this);
     init();
+    qDebug() << "RemoteActivatableList::serviceRegistered()" << d->iface;
     emit appeared();
 }
 

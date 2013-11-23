@@ -145,6 +145,7 @@ void NetworkManagementService::finishInitialization()
     // give some time for the ActivatableAdded signal be processed before we emit the activationStateChanged
     // and hasDefaultRouteChanged signals from d->nmActiveConnectionMonitor.
     qDebug() << "Finalizando la inicializacion";
+    qDebug() << "d->activatableList" << d->activatableList->activatables().count();
     QTimer::singleShot(1000, this, SLOT(delayedRegisterObservers()));
 }
 

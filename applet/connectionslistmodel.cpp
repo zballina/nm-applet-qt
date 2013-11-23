@@ -70,6 +70,7 @@ ConnectionsListModel::ConnectionsListModel(RemoteActivatableList *activatables, 
     m_oldShowMoreChecked = true;
     wicCount = 0; // number of wireless networks which user explicitly configured using the kcm module.
 
+    qDebug() << "m_activatables->activatables().count()" << m_activatables->activatables().count();
     QSettings config;
     config.beginGroup("General");
     m_oldShowMoreChecked = config.value(QLatin1String("ShowMoreConnections"), true).toBool();
@@ -353,6 +354,7 @@ void ConnectionsListModel::appendRow(ConnectionItem *item)
     const int start = rowCount();
     beginInsertRows(QModelIndex(), start, start);
 
+    qDebug() << "appendRow" << item->connectionName() << item->connectionUuid();
     connect(item, SIGNAL(itemChanged()), this, SLOT(itemChanged()));
     connect(item, SIGNAL(showInterfaceDetails(QString)), this, SIGNAL(showInterfaceDetails(QString)));
 
@@ -546,6 +548,7 @@ void ConnectionsListModel::setDeviceToFilter(const NetworkManager::Device::Ptr &
 
 void ConnectionsListModel::updateConnectionsList()
 {
+    qDebug() << "Connections count: " << connections.count();
     foreach (ConnectionItem * item, connections)
     {
         removeItem(item);
@@ -605,25 +608,24 @@ void ConnectionsListModel::updateConnectionsList()
             ConnectionItem *item = new ConnectionItem(activatable);
             appendRow(item);
         }
-        else
-            if (currentFilter.testFlag(VpnConnections) && activatable->activatableType() == Knm::Activatable::VpnInterfaceConnection)
+        else if (currentFilter.testFlag(VpnConnections) && activatable->activatableType() == Knm::Activatable::VpnInterfaceConnection)
+        {
+            ConnectionItem *item = new ConnectionItem(activatable);
+            appendRow(item);
+        }
+        else if (currentFilter.testFlag(SharedConnections))
+        {
+            if (activatable->isShared() && !((activatable->activatableType() == Knm::Activatable::WirelessInterfaceConnection ||
+                                              activatable->activatableType() == Knm::Activatable::WirelessNetwork) && !NetworkManager::isWirelessEnabled()) && !m_vpn)
             {
                 ConnectionItem *item = new ConnectionItem(activatable);
                 appendRow(item);
             }
-            else
-                if (currentFilter.testFlag(SharedConnections))
-                {
-                    if (activatable->isShared() && !((activatable->activatableType() == Knm::Activatable::WirelessInterfaceConnection ||
-                                                      activatable->activatableType() == Knm::Activatable::WirelessNetwork) && !NetworkManager::isWirelessEnabled()) && !m_vpn)
-                    {
-                        ConnectionItem *item = new ConnectionItem(activatable);
-                        appendRow(item);
-                    }
-                }
+        }
     }
 
     updateShowMoreItem();
+    qDebug() << "Connections count: " << connections.count();
 }
 
 void ConnectionsListModel::connectToHiddenNetwork(QVariant ssidParam)
