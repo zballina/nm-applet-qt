@@ -21,10 +21,8 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef NETWORKINTERFACEMONITOR_H
 #define NETWORKINTERFACEMONITOR_H
 
-#include <QObject>
-#include <QDBusPendingCallWatcher>
-
-#include "knm_export.h"
+#include <QtCore/QObject>
+#include <QtDBus/QDBusPendingCallWatcher>
 
 class ConnectionList;
 class ActivatableList;
@@ -33,7 +31,7 @@ class NetworkInterfaceMonitorPrivate;
 /**
  * Monitors network hardware and maintains NetworkInterfaceActivatableProviders for them
  */
-class KNM_EXPORT NetworkInterfaceMonitor : public QObject
+class NetworkInterfaceMonitor : public QObject
 {
 Q_OBJECT
 Q_DECLARE_PRIVATE(NetworkInterfaceMonitor)

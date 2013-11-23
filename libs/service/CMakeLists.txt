@@ -19,6 +19,7 @@ set(knmservice_HEADERS
    activatablelist.h
 
    # maintains NIC activatable providers
+   networkinterfacemonitor.h
 
    # relates connections to network interfaces
     networkinterfaceactivatableprovider.h
@@ -46,6 +47,9 @@ set(knmservice_HEADERS
 
    # sort logic for activatables
     sortedactivatablelist.h
+
+   # dialog to ask for PIN code
+   pindialog.h
 )
    
 set(knmservice_SOURCES
@@ -65,6 +69,7 @@ set(knmservice_SOURCES
    activatablelist.cpp
 
    # maintains NIC activatable providers
+   networkinterfacemonitor.cpp
 
    # relates connections to network interfaces
     networkinterfaceactivatableprovider.cpp
@@ -104,6 +109,13 @@ set(knmservice_SOURCES
 
    # sort logic for activatables
     sortedactivatablelist.cpp
+
+   # dialog to ask for PIN code
+   pindialog.cpp
+)
+
+set(knmservice_UI_SOURCES
+    forms/pinwidget.ui
 )
 
 qt4_add_dbus_adaptor(
@@ -161,6 +173,8 @@ qt4_add_dbus_adaptor(knmservice_SRCS
 
 include( ${QT_USE_FILE} )
 
+
+qt4_wrap_ui(UI_FILES ${knmservice_UI_SOURCES})
 qt4_wrap_cpp( HEADERS_MOC ${knmservice_HEADERS})
 
 link_directories( 
@@ -174,6 +188,7 @@ link_directories(
 add_library(knmservice 
     SHARED 
     ${knmservice_SRCS} 
+    ${UI_FILES}
     ${HEADERS_MOC} 
     ${knmservice_SOURCES}
 )

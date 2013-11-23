@@ -11,7 +11,7 @@ include_directories(
    ## next target: test service
 
 set(kded_networkmanagement_SOURCES
-   service.cpp
+    service.cpp
 )
 
 set(kded_networkmanagement_HEADERS

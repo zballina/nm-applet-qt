@@ -35,6 +35,9 @@ NMDialog::NMDialog(RemoteActivatableList * activatableList, QWidget *parent) :
     connect(NetworkManager::notifier(), SIGNAL(wwanHardwareEnabledChanged(bool)),
             this, SLOT(managerWwanHardwareEnabledChanged(bool)));
 
+    connect(ui->pushButtonCountList, SIGNAL(clicked()),
+            this, SLOT(countConnectionsList()));
+
     foreach(const NetworkManager::Device::Ptr &iface, NetworkManager::networkInterfaces()) {
         addInterfaceInternal(iface);
         qDebug() << "Network Interface:" << iface->interfaceName() << iface->driver() << iface->designSpeed();
@@ -64,6 +67,11 @@ NMDialog::~NMDialog()
 {
     delete ui;
     delete listItemDelegate;
+}
+
+void NMDialog::countConnectionsList()
+{
+    QMessageBox::information(this, "Title", QString("List count: %1").arg(m_activatables->activatables().count()));
 }
 
 void NMDialog::createActions()

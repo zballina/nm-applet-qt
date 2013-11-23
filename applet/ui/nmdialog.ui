@@ -20,11 +20,29 @@
       <widget class="QListView" name="connectionsList"/>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBoxShowMore">
-       <property name="text">
-        <string>Show &amp;More</string>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonCountList">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBoxShowMore">
+         <property name="text">
+          <string>Show &amp;More</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>

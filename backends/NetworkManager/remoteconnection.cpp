@@ -50,7 +50,7 @@ RemoteConnection::RemoteConnection(const QString &service, const QString &path, 
     m_path = path;
     m_type = NetworkManager::Device::UnknownType;
 
-    //qDebug() << m_connection;
+    qDebug() << m_connection;
 
     if (m_connection.contains(QLatin1String(NM_SETTING_CONNECTION_SETTING_NAME)))
     {
@@ -64,36 +64,31 @@ RemoteConnection::RemoteConnection(const QString &service, const QString &path, 
         {
             nmType = connectionSetting.value(QLatin1String(NM_SETTING_CONNECTION_TYPE)).toString();
         }
-        //qDebug() << nmType;
+        qDebug() << nmType;
         if (nmType == QLatin1String(NM_SETTING_CDMA_SETTING_NAME))
         {
             m_type = NetworkManager::Device::Modem;
         }
-        else
-            if (nmType == QLatin1String(NM_SETTING_GSM_SETTING_NAME))
-            {
-                m_type = NetworkManager::Device::Modem;
-            }
-            else
-                if (nmType == QLatin1String(NM_SETTING_BLUETOOTH_SETTING_NAME))
-                {
-                    m_type = NetworkManager::Device::Bluetooth;
-                }
-                else
-                    if (nmType == QLatin1String(NM_SETTING_PPPOE_SETTING_NAME))
-                    {
-                        m_type = NetworkManager::Device::Modem;
-                    }
-                    else
-                        if (nmType == QLatin1String(NM_SETTING_WIRED_SETTING_NAME))
-                        {
-                            m_type = NetworkManager::Device::Ethernet;
-                        }
-                        else
-                            if (nmType == QLatin1String(NM_SETTING_WIRELESS_SETTING_NAME))
-                            {
-                                m_type = NetworkManager::Device::Wifi;
-                            }
+        else if (nmType == QLatin1String(NM_SETTING_GSM_SETTING_NAME))
+        {
+            m_type = NetworkManager::Device::Modem;
+        }
+        else if (nmType == QLatin1String(NM_SETTING_BLUETOOTH_SETTING_NAME))
+        {
+            m_type = NetworkManager::Device::Bluetooth;
+        }
+        else if (nmType == QLatin1String(NM_SETTING_PPPOE_SETTING_NAME))
+        {
+            m_type = NetworkManager::Device::Modem;
+        }
+        else if (nmType == QLatin1String(NM_SETTING_WIRED_SETTING_NAME))
+        {
+            m_type = NetworkManager::Device::Ethernet;
+        }
+        else if (nmType == QLatin1String(NM_SETTING_WIRELESS_SETTING_NAME))
+        {
+            m_type = NetworkManager::Device::Wifi;
+        }
         /* TODO: add NM_SETTING_OLPC_MESH_SETTING_NAME, NM_SETTING_WIMAX_SETTING_NAME */
     }
 }

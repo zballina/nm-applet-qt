@@ -185,7 +185,7 @@ void NetworkManagerApplet::vpnActivationStateChanged(Knm::InterfaceConnection::A
             }
             break;
     }
-    //kDebug() << newState << m_totalActiveVpnConnections;
+    qDebug() << newState << m_totalActiveVpnConnections;
     //update();
 }
 
@@ -195,7 +195,7 @@ void NetworkManagerApplet::updateActiveInterface(bool hasDefaultRoute)
     if (hasDefaultRoute) {
         // TODO: add support for VpnRemoteInterfaceConnection's, which have "any" as ic->deviceUni().
         setActiveInterface(NetworkManager::findNetworkInterface(ic->deviceUni()));
-        connect(m_activeInterface.data(), SIGNAL(destroyed(QObject*)), SLOT(_k_destroyed(QObject*)));
+//        connect(m_activeInterface.data(), SIGNAL(destroyed(QObject*)), SLOT(_k_destroyed(QObject*)));
         resetActiveSystrayInterface();
     }
 }

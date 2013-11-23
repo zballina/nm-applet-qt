@@ -30,6 +30,8 @@ class NMDialog : public QDialog
         void manageConnections();
         void showInterfaceDetails(const QString & uni);
         void manageSelection();
+        void countConnectionsList();
+
 
     private Q_SLOTS:
         void readConfig();

@@ -29,11 +29,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QtCore/QDebug>
 #include <QtGui/QAction>
-//#include <KAuth/Action>
-//#include <kauthactionreply.h>
-//#include <KMessageBox>
 #include <QtGui/QMessageBox>
-//#include <KLocale>
 
 // knminternals includes
 #include "connection.h"
@@ -42,7 +38,6 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 // knmservice includes
 #include "activatablelist.h"
-//#include "notificationmanager.h"
 #include "events.h"
 
 #include "settings/ipv4.h"
@@ -115,7 +110,6 @@ NMDBusSettingsConnectionProvider::~NMDBusSettingsConnectionProvider()
 
 void NMDBusSettingsConnectionProvider::initConnections()
 {
-    qDebug();
     Q_D(NMDBusSettingsConnectionProvider);
     // ListConnections() is asynchronous; we need to wait until completion, else it won't work
     QDBusPendingReply<QList<QDBusObjectPath> > reply = d->iface->ListConnections();
@@ -144,6 +138,7 @@ void NMDBusSettingsConnectionProvider::initialiseAndRegisterRemoteConnection(con
     }
     else
     {
+        qDebug() << "NMDBusSettingsConnectionProvider::initialiseAndRegisterRemoteConnection(const QString &path)";
         RemoteConnection *connectionIface = new RemoteConnection(d->iface->service(), path, this);
         makeConnections(connectionIface);
         const NMVariantMapMap settings = connectionIface->GetSettings();
@@ -160,6 +155,7 @@ void NMDBusSettingsConnectionProvider::initialiseAndRegisterRemoteConnection(con
         ConnectionDbus dbusConverter(connection);
         dbusConverter.fromDbusMap(settings);
 
+
         d->connections.insert(connection->uuid(), connectionIface);
         d->uuidToPath.insert(connection->uuid(), path);
 
@@ -168,6 +164,8 @@ void NMDBusSettingsConnectionProvider::initialiseAndRegisterRemoteConnection(con
         connection->setOrigin(QLatin1String("NMDBusSettingsConnectionProvider"));
 
         d->connectionList->addConnection(connection);
+
+        qDebug() << "Connection List" << d->connections.count();
     }
 }
 

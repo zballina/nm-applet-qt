@@ -28,6 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <activatablelist.h>
 #include <connectionusagemonitor.h>
 #include <configurationlauncher.h>
+#include <networkinterfacemonitor.h>
 #include <sortedactivatablelist.h>
 #include <vpninterfaceconnectionprovider.h>
 
@@ -47,6 +48,8 @@ public:
     ConnectionList * connectionList;
     // list of things to show in the UI
     ActivatableList * activatableList;
+    // creates Activatables based on the state of network interfaces
+    NetworkInterfaceMonitor * networkInterfaceMonitor;
     // NetworkManager secrets agent
     NMDBusSecretAgent * nmDBusSecretAgent;
     // update interfaceconnections with status info from NetworkManager
@@ -134,7 +137,7 @@ void NetworkManagementService::finishInitialization()
     // references to both and NetworkInterfaceActivatableProvider touches the activatableList
     // in its dtor (needed so it cleans up when removed by the monitor)
     // ideally this will always be deleted before the other list
-//    d->networkInterfaceMonitor = new NetworkInterfaceMonitor(d->connectionList, d->activatableList, d->activatableList);
+    d->networkInterfaceMonitor = new NetworkInterfaceMonitor(d->connectionList, d->activatableList, d->activatableList);
 
 //    d->nm08Connections = new Nm08Connections(d->secretStorage, d->nmDBusConnectionProvider);
 //    d->nm08Connections->importNextNm08Connection();

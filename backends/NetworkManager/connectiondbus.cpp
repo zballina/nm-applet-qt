@@ -218,9 +218,9 @@ NMVariantMapMap ConnectionDbus::toDbusMap()
     }
 #endif
 
-    //qDebug() << "Printing connection map: ";
-    //foreach(QString key, connectionMap.keys())
-    //qDebug() << key << " : " << connectionMap.value(key);
+    qDebug() << "Printing connection map: ";
+    foreach(QString key, connectionMap.keys())
+        qDebug() << key << " : " << connectionMap.value(key);
 
     mapMap.insert(QLatin1String(NM_SETTING_CONNECTION_SETTING_NAME), connectionMap);
 
@@ -243,9 +243,9 @@ NMVariantMapMap ConnectionDbus::toDbusMap()
                     || (m_connection->type() == Knm::Connection::Pppoe && setting->type() == Knm::Setting::Ppp))
             {
                 mapMap.insert(setting->name(), map);
-                //qDebug() << "  Settings: " << setting->name();
-                //foreach(QString key, map.keys())
-                //qDebug() << "    " << key << " : " << map.value(key);
+                qDebug() << "  Settings: " << setting->name();
+                foreach(QString key, map.keys())
+                    qDebug() << "    " << key << " : " << map.value(key);
             }
         }
     }
@@ -290,7 +290,6 @@ void ConnectionDbus::fromDbusMap(const NMVariantMapMap &settings)
     // connection settings
     QVariantMap connectionSettings = settings.value(QLatin1String(NM_SETTING_CONNECTION_SETTING_NAME));
 
-    qDebug();
     // WARNING: this print secrets, do not commit it uncommented.
     qDebug() << "Settings map is " << settings;
 
@@ -331,40 +330,34 @@ void ConnectionDbus::fromDbusMap(const NMVariantMapMap &settings)
     {
         type = Connection::Wired;
     }
-    else
-        if (dbusConnectionType == QLatin1String(NM_SETTING_WIRELESS_SETTING_NAME))
-        {
-            type = Connection::Wireless;
-        }
+    else if (dbusConnectionType == QLatin1String(NM_SETTING_WIRELESS_SETTING_NAME))
+    {
+        type = Connection::Wireless;
+    }
+    else if (dbusConnectionType == QLatin1String(NM_SETTING_GSM_SETTING_NAME))
+    {
+        type = Connection::Gsm;
+    }
+    else if (dbusConnectionType == QLatin1String(NM_SETTING_CDMA_SETTING_NAME))
+    {
+        type = Connection::Cdma;
+    }
+    else if (dbusConnectionType == QLatin1String(NM_SETTING_BLUETOOTH_SETTING_NAME))
+    {
+        type = Connection::Bluetooth;
+        if (settings.value(dbusConnectionType).value(NM_SETTING_CONNECTION_TYPE) == QLatin1String(NM_SETTING_BLUETOOTH_TYPE_PANU))
+            bt_cap = NM_BT_CAPABILITY_NAP;
         else
-            if (dbusConnectionType == QLatin1String(NM_SETTING_GSM_SETTING_NAME))
-            {
-                type = Connection::Gsm;
-            }
-            else
-                if (dbusConnectionType == QLatin1String(NM_SETTING_CDMA_SETTING_NAME))
-                {
-                    type = Connection::Cdma;
-                }
-                else
-                    if (dbusConnectionType == QLatin1String(NM_SETTING_BLUETOOTH_SETTING_NAME))
-                    {
-                        type = Connection::Bluetooth;
-                        if (settings.value(dbusConnectionType).value(NM_SETTING_CONNECTION_TYPE) == QLatin1String(NM_SETTING_BLUETOOTH_TYPE_PANU))
-                            bt_cap = NM_BT_CAPABILITY_NAP;
-                        else
-                            bt_cap = NM_BT_CAPABILITY_DUN;
-                    }
-                    else
-                        if (dbusConnectionType == QLatin1String(NM_SETTING_VPN_SETTING_NAME))
-                        {
-                            type = Connection::Vpn;
-                        }
-                        else
-                            if (dbusConnectionType == QLatin1String(NM_SETTING_PPPOE_SETTING_NAME))
-                            {
-                                type = Connection::Pppoe;
-                            }
+            bt_cap = NM_BT_CAPABILITY_DUN;
+    }
+    else if (dbusConnectionType == QLatin1String(NM_SETTING_VPN_SETTING_NAME))
+    {
+        type = Connection::Vpn;
+    }
+    else if (dbusConnectionType == QLatin1String(NM_SETTING_PPPOE_SETTING_NAME))
+    {
+        type = Connection::Pppoe;
+    }
 
     m_connection->setName(connName);
     m_connection->setUuid(uuid);
@@ -407,7 +400,7 @@ void ConnectionDbus::fromDbusSecretsMap(const NMVariantMapMap &secrets)
     NMVariantMapMap::const_iterator i;
     for (i = secrets.constBegin(); i != secrets.constEnd(); ++i)
     {
-        //qDebug() << "Secret setting name " << i.key();
+        qDebug() << "Secret setting name " << i.key();
         QVariantMap secret = i.value();
 
         if (secret.isEmpty())
@@ -428,11 +421,11 @@ void ConnectionDbus::fromDbusSecretsMap(const NMVariantMapMap &secrets)
         {
             origs.insert(i.key(), secret);
             // WARNING: this print secrets, do not commit them uncommented.
-            //qDebug() << "Inserted setting " << i.key() << " " << secret;
+            qDebug() << "Inserted setting " << i.key() << " " << secret;
         }
     }
 
-    //qDebug() << "New settings: " << origs;
+    qDebug() << "New settings: " << origs;
 
     fromDbusMap(origs);
 }

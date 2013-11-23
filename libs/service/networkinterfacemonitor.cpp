@@ -20,14 +20,14 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "networkinterfacemonitor.h"
 
-#include <QDBusPendingReply>
+#include <QtDBus/QDBusPendingReply>
+#include <QDebug>
 
-#include <KLocale>
-#include <KMessageBox>
-#include <kdeversion.h>
+#include <QtGui/QMessageBox>
 #include <ModemManagerQt/manager.h>
 
 #include <connection.h>
+#include "environment.h"
 #include "activatablelist.h"
 #include "connectionlist.h"
 #include "networkinterfaceactivatableprovider.h"
@@ -35,7 +35,6 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 #include "wirelessnetworkinterfaceactivatableprovider.h"
 #include "gsmnetworkinterfaceactivatableprovider.h"
 #include "pindialog.h"
-#include "knmserviceprefs.h"
 
 class NetworkInterfaceMonitorPrivate
 {
@@ -82,25 +81,25 @@ NetworkInterfaceMonitor::~NetworkInterfaceMonitor()
 void NetworkInterfaceMonitor::deviceAdded(const QString & uni)
 {
     Q_D(NetworkInterfaceMonitor);
-    kDebug();
+    qDebug();
 
     NetworkManager::Device::Ptr iface = NetworkManager::findNetworkInterface(uni);
     if (iface && !d->providers.contains(uni)) {
         NetworkInterfaceActivatableProvider * provider;
         if (iface->type() == NetworkManager::Device::Wifi) {
-            kDebug() << "Wireless interface added";
+            qDebug() << "Wireless interface added";
             provider = new WirelessNetworkInterfaceActivatableProvider(d->connectionList, d->activatableList, iface.objectCast<NetworkManager::WirelessDevice>(), this);
         } else if (iface->type() == NetworkManager::Device::Ethernet) {
-            kDebug() << "Wired interface added";
+            qDebug() << "Wired interface added";
             provider = new WiredNetworkInterfaceActivatableProvider(d->connectionList, d->activatableList, iface.objectCast<NetworkManager::WiredDevice>(), this);
         } else if (iface->type() == NetworkManager::Device::Bluetooth) {
-            kDebug() << "Bluetooth interface added";
+            qDebug() << "Bluetooth interface added";
             provider = new GsmNetworkInterfaceActivatableProvider(d->connectionList, d->activatableList, iface.objectCast<NetworkManager::ModemDevice>(), this);
         } else if (iface->type() == NetworkManager::Device::Modem) {
-            kDebug() << "Gsm interface added";
+            qDebug() << "Gsm interface added";
             provider = new GsmNetworkInterfaceActivatableProvider(d->connectionList, d->activatableList, iface.objectCast<NetworkManager::ModemDevice>(), this);
         } else {
-            kDebug() << "Unknown interface added: uni == " << uni << "(type == " << iface->type() << ")";
+            qDebug() << "Unknown interface added: uni == " << uni << "(type == " << iface->type() << ")";
             provider = new NetworkInterfaceActivatableProvider(d->connectionList, d->activatableList, iface, this);
         }
         d->connectionList->registerConnectionHandler(provider);
@@ -133,11 +132,6 @@ void NetworkInterfaceMonitor::modemAdded(const QString & udi)
         return;
     }
 
-    KNetworkManagerServicePrefs::self()->readConfig();
-    if (KNetworkManagerServicePrefs::self()->askForGsmPin() != KNetworkManagerServicePrefs::OnModemDetection) {
-        return;
-    }
-
     // Using queued invocation to prevent kded stalling here until user enters the pin.
     QMetaObject::invokeMethod(modem.data(), "unlockRequiredChanged", Qt::QueuedConnection,
                               Q_ARG(QString, modem->unlockRequired()));
@@ -146,7 +140,7 @@ void NetworkInterfaceMonitor::modemAdded(const QString & udi)
 void NetworkInterfaceMonitor::requestPin(const QString & unlockRequired)
 {
     Q_D(NetworkInterfaceMonitor);
-    kDebug() << "unlockRequired == " << unlockRequired;
+    qDebug() << "unlockRequired == " << unlockRequired;
     if (unlockRequired.isEmpty()) {
         return;
     }
@@ -157,7 +151,7 @@ void NetworkInterfaceMonitor::requestPin(const QString & unlockRequired)
     }
 
     if (d->dialog) {
-        kDebug() << "PinDialog already running";
+        qDebug() << "PinDialog already running";
         return;
     }
 
@@ -166,7 +160,7 @@ void NetworkInterfaceMonitor::requestPin(const QString & unlockRequired)
     } else if (unlockRequired == QLatin1String("sim-puk")) {
         d->dialog = new PinDialog(modem, PinDialog::PinPuk);
     } else {
-        kWarning() << "Unhandled unlock request for '" << unlockRequired << "'";
+        qWarning() << "Unhandled unlock request for '" << unlockRequired << "'";
         return;
     }
 
@@ -174,7 +168,7 @@ void NetworkInterfaceMonitor::requestPin(const QString & unlockRequired)
         goto OUT;
     }
 
-    kDebug() << "Sending unlock code";
+    qDebug() << "Sending unlock code";
 
     {
         QDBusPendingCallWatcher *watcher = 0;
@@ -205,7 +199,7 @@ void NetworkInterfaceMonitor::onSendPinArrived(QDBusPendingCallWatcher * watcher
         // Automatically enabling this for cell phones with expensive data plans is not a good idea.
         //NetworkManager::setWwanEnabled(true);
     } else {
-        KMessageBox::error(0, i18nc("Text in GSM PIN/PUK unlock error dialog", "Error unlocking modem: %1", reply.error().message()), i18nc("Title for GSM PIN/PUK unlock error dialog", "PIN/PUK unlock error"));
+        QMessageBox::warning(0, i18nc("Text in GSM PIN/PUK unlock error dialog", "Error unlocking modem: %1", reply.error().message()), i18nc("Title for GSM PIN/PUK unlock error dialog", "PIN/PUK unlock error"));
     }
 
     watcher->deleteLater();
